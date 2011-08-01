@@ -5,9 +5,9 @@
 	Description: A featured slider for the Genesis Framework.
 	Author: StudioPress
 	Author URI: http://www.studiopress.com
-	
-	Version: 0.9
-	
+
+	Version: 0.9.1
+
 	License: GNU General Public License v2.0
 	License URI: http://www.opensource.org/licenses/gpl-license.php
 */
@@ -23,13 +23,13 @@ add_action( 'genesis_init', 'GenesisSliderInit', 15 );
  * Loads required files and adds image via Genesis Init Hook
  */
 function GenesisSliderInit() {
-	
+
 	/** Include Admin file */
 	if ( is_admin() ) require_once( dirname( __FILE__ ) . '/admin.php' );
 
 	/** Add new image size */
 	add_image_size( 'slider', ( int ) genesis_get_slider_option( 'slideshow_width' ), ( int ) genesis_get_slider_option( 'slideshow_height' ), TRUE );
-		
+
 }
 
 add_action( 'wp_enqueue_scripts', 'genesis_slider_scripts' );
@@ -37,10 +37,10 @@ add_action( 'wp_enqueue_scripts', 'genesis_slider_scripts' );
  * Load the script files
  */
 function genesis_slider_scripts() {
-	
+
 	/** easySlider JavaScript code */
 	wp_enqueue_script( 'jflow', WP_PLUGIN_URL . '/genesis-slider/js/jflow.plus.js', array( 'jquery' ), '1.2', TRUE );
-	
+
 }
 
 add_action( 'wp_print_styles', 'genesis_slider_styles' );
@@ -48,11 +48,11 @@ add_action( 'wp_print_styles', 'genesis_slider_styles' );
  * Load the CSS files
  */
 function genesis_slider_styles() {
-	
+
 	/** standard slideshow styles */
 	wp_register_style( 'slider_styles', WP_PLUGIN_URL . '/genesis-slider/style.css' );
 	wp_enqueue_style( 'slider_styles' );
-	
+
 }
 
 add_action( 'wp_head', 'genesis_slider_head', 1 );
@@ -66,19 +66,20 @@ function genesis_slider_head() {
 
 		$slideInfoWidth = ( int ) genesis_get_slider_option( 'slideshow_excerpt_width' );
 		$slideNavTop = ( int ) ( ($height - 60) * .5 );
-		
+
 		$vertical = genesis_get_slider_option( 'location_vertical' );
 		$horizontal = genesis_get_slider_option( 'location_horizontal' );
 
-		echo '<style>
-				#previous a img { background: transparent url(' . CHILD_URL . '/images/slider-previous.png) no-repeat; }
-				#next a img { background: transparent url(' . CHILD_URL . '/images/slider-next.png) no-repeat; }
-					#genesis-slider, #slides, .genesis-slider-wrap { height: ' . $height . 'px; width: ' . $width . 'px; }
-					.slide-excerpt { width: ' . $slideInfoWidth . 'px; }
-					.slide-excerpt { ' . $vertical . ': 0; }
-					.slide-excerpt { '. $horizontal . ': 0; }
-					.slider-next, .slider-previous { top: ' . $slideNavTop . 'px };
-				</style>';
+		echo '
+		<style>
+			#previous a img { background: transparent url(' . CHILD_URL . '/images/slider-previous.png) no-repeat; }
+			#next a img { background: transparent url(' . CHILD_URL . '/images/slider-next.png) no-repeat; }
+			#genesis-slider, #slides, .genesis-slider-wrap { height: ' . $height . 'px; width: ' . $width . 'px; }
+			.slide-excerpt { width: ' . $slideInfoWidth . 'px; }
+			.slide-excerpt { ' . $vertical . ': 0; }
+			.slide-excerpt { '. $horizontal . ': 0; }
+			.slider-next, .slider-previous { top: ' . $slideNavTop . 'px };
+		</style>';
 }
 
 add_action( 'wp_footer', 'genesis_slider_jflow_params' );
@@ -114,7 +115,6 @@ function genesis_slider_jflow_params() {
 
 }
 
-
 add_action( 'widgets_init', 'Genesis_SliderRegister' );
 /**
  * Registers the slider widget
@@ -123,6 +123,12 @@ function Genesis_SliderRegister() {
 	register_widget( 'Genesis_SliderWidget' );
 }
 
+add_filter('excerpt_more', 'genesis_slider_excerpt_more');
+/** Creates read more link after excerpt */
+function genesis_slider_excerpt_more($more) {
+	global $post;
+	return '&hellip; <a href="'. get_permalink($post->ID) . '">[Continue Reading]</a>';
+}
 
 /**
  * Slideshow Widget Class
@@ -151,7 +157,7 @@ class Genesis_SliderWidget extends WP_Widget {
 			if ( 'page' != genesis_get_slider_option( 'post_type' ) ) {
 
 				if ( genesis_get_slider_option( 'posts_term' ) ) {
-					
+
 					$posts_term = explode( ',', genesis_get_slider_option( 'posts_term' ) );
 
 					if ( 'category' == $posts_term['0'] )
@@ -162,11 +168,11 @@ class Genesis_SliderWidget extends WP_Widget {
 
 					if ( isset( $posts_term['1'] ) )
 						$term_args[$posts_term['0']] = $posts_term['1'];
-						
+
 				}
 
 				if ( !empty( $posts_term['0'] ) ) {
-					
+
 					if ( 'category' == $posts_term['0'] )
 						$taxonomy = 'category';
 
@@ -175,18 +181,18 @@ class Genesis_SliderWidget extends WP_Widget {
 
 					else
 						$taxonomy = $posts_term['0'];
-						
+
 				} else {
-					
+
 					$taxonomy = 'category';
-						
+
 				}
 
 				if ( genesis_get_slider_option( 'exclude_terms' ) ) {
-					
+
 					$exclude_terms = explode( ',', str_replace( ' ', '', genesis_get_slider_option( 'exclude_terms' ) ) );
 					$term_args[$taxonomy . '__not_in'] = $exclude_terms;
-						
+
 				}
 			}
 
@@ -216,7 +222,7 @@ class Genesis_SliderWidget extends WP_Widget {
 
 		<div id="genesis-slider">
 			<div class="genesis-slider-wrap">
-			
+
 				<div id="slides">
 					<?php
 						$controller = '';
@@ -225,7 +231,8 @@ class Genesis_SliderWidget extends WP_Widget {
 						$controller .= '<span class="jFlowControl"></span>';
 					?>
 					<div>
-					
+
+					<?php if ( genesis_get_slider_option( 'slideshow_excerpt_show' ) == 1 ) { ?>
 						<div class="slide-excerpt">
 							<div class="slide-background"></div><!-- end .slide-background -->
 							<div class="slide-excerpt-border ">
@@ -233,31 +240,32 @@ class Genesis_SliderWidget extends WP_Widget {
 								<?php the_excerpt(); ?>
 							</div><!-- end .slide-excerpt-border  -->
 						</div><!-- end .slide-excerpt -->
-						
+					<?php } ?>
+
 						<div class="slide-image">
 							<a href="<?php the_permalink() ?>" rel="bookmark"><?php genesis_image( "format=html&size=slider" ); ?></a>
 						</div><!-- end .slide-image -->
-						
+
 					</div>
 				<?php endwhile; ?>
 				</div><!-- end #slides -->
-				
+
 				<div id="myController">
 					<?php echo $controller; ?>
 				</div><!-- end #myController -->
-				
-				<?php if ( genesis_get_slider_option( 'posts_num' ) >= 2 ) { ?>
+
+				<?php if ( genesis_get_slider_option( 'posts_num' ) >= 2 && genesis_get_slider_option( 'slideshow_arrows' ) ) { ?>
 					<div class="slider-previous"></div>
 					<div class="slider-next"></div>
 				<?php } ?>
-				
+
 			</div><!-- end .genesis-slider-wrap -->
 		</div><!-- end #genesis-slider -->
 
 <?php
 		echo $after_widget;
 		wp_reset_query();
-		
+
 		}
 
 		/** Widget options */
@@ -282,9 +290,9 @@ function genesis_slider_exclude_taxonomies( $taxonomy ) {
 
 	$filters = array( '', 'nav_menu' );
 	$filters = apply_filters( 'genesis_slider_exclude_taxonomies', $filters );
-	
+
 	return ( ! in_array( $taxonomy->name, $filters ) );
-		
+
 }
 
 /**
@@ -302,7 +310,7 @@ function genesis_slider_exclude_post_types( $type ) {
 	$filters = apply_filters( 'genesis_slider_exclude_post_types', $filters );
 
 	return ( ! in_array( $type, $filters ) );
-		
+
 }
 
 /**
@@ -321,7 +329,7 @@ function genesis_get_slider_option( $key ) {
  * @param string $key key value for option
  */
 function genesis_slider_option( $key ) {
-	
+
 	if ( ! genesis_get_slider_option( $key ) )
 		return false;
 

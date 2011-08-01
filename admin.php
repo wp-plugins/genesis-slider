@@ -20,9 +20,11 @@ function genesis_slider_defaults() {
 		'orderby' => 'date',
 		'slideshow_timer' => 3000,
 		'slideshow_delay' => 400,
+		'slideshow_arrows' => 1,
 		'slideshow_height' => 400,
-		'slideshow_excerpt_width' => 400,
 		'slideshow_width' => 870,
+		'slideshow_excerpt_show' => 1,
+		'slideshow_excerpt_width' => 500,
 		'location_vertical' => 'bottom',
 		'location_horizontal' => 'right'
 	);
@@ -33,10 +35,10 @@ add_action( 'admin_init', 'register_genesis_slider_settings' );
  * This registers the settings field
  */
 function register_genesis_slider_settings() {
-	
+
 	register_setting( GENESIS_SLIDER_SETTINGS_FIELD, GENESIS_SLIDER_SETTINGS_FIELD );
 	add_option( GENESIS_SLIDER_SETTINGS_FIELD, genesis_slider_defaults(), '', 'yes' );
-	
+
 	if ( ! isset($_REQUEST['page']) || $_REQUEST['page'] != 'genesis_slider' )
 		return;
 
@@ -46,7 +48,7 @@ function register_genesis_slider_settings() {
 		genesis_admin_redirect( 'genesis_slider', array( 'reset' => 'true' ) );
 		exit;
 	}
-	
+
 }
 
 add_action('admin_notices', 'genesis_slider_notice');
@@ -145,7 +147,7 @@ function genesis_slider_settings_admin() {
 					<?php do_meta_boxes( $_genesis_slider_settings_pagehook, 'column1', null ); ?>
 				</div>
 			</div>
-			
+
 			<div class="bottom-buttons">
 				<input type="submit" class="button-primary" value="<?php _e('Save Settings', 'genesis') ?>" />
 				<input type="submit" class="button-highlighted" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[reset]" value="<?php _e('Reset Settings', 'genesis'); ?>" />
@@ -177,7 +179,7 @@ function genesis_slider_options_box() {
 
 			<div id="genesis-slider-content-type">
 
-				<h4>Type of Content</h4>
+				<h4><?php _e( 'Type of Content', 'genesis' ); ?></h4>
 
 				<p><label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[post_type]"><?php _e( 'Would you like to use posts or pages', 'genesis' ); ?>?</label>
 					<select id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[post_type]" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[post_type]">
@@ -223,16 +225,16 @@ function genesis_slider_options_box() {
 								foreach ( $terms as $term ) {
 				?>
 									<option style="margin-left: 8px; padding-right:10px;" value="<?php echo esc_attr( $query_label ) . ',' . $term->slug; ?>" <?php selected( esc_attr( $query_label ) . ',' . $term->slug, genesis_get_slider_option( 'posts_term' ) ); ?>><?php echo '-' . esc_attr( $term->name ); ?></option><?php } ?>
-								
+
 								</optgroup> <?php } ?>
 
 						</select>
 					</p>
-					
+
 					<p><strong style="display: block; font-size: 11px; margin-top: 10px;"><?php _e( 'Include or Exclude by Taxonomy ID', 'genesis' ); ?></strong></p>
-					
+
 					<p>
-						<label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[exclude_terms]"><?php printf( __( 'List which category, tag or other taxonomy IDs to include/exclude. (1,2,3,4 for example)', 'genesis' ), '<br />' ); ?></label>
+						<label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[exclude_terms]"><?php printf( __( 'List which category, tag or other taxonomy IDs to include / exclude. (1,2,3,4 for example)', 'genesis' ), '<br />' ); ?></label>
 					</p>
 
 					<p>
@@ -245,11 +247,10 @@ function genesis_slider_options_box() {
 					<strong style="font-size:11px;margin-top:10px;"><label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[include_exclude]"><?php printf( __( 'Include or Exclude by %s ID', 'genesis' ), genesis_get_slider_option( 'post_type' ) ); ?></label></strong>
 				</p>
 
-				<p><?php _e( 'Choose the include/exclude slides using their post/page ID in a comma-separated list. (1,2,3,4 for example)', 'genesis' ); ?></p>
+				<p><?php _e( 'Choose the include / exclude slides using their post / page ID in a comma-separated list. (1,2,3,4 for example)', 'genesis' ); ?></p>
 
 				<p>
 					<select style="margin-top: 5px;" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[include_exclude]" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[include_exclude]">
-
 						<option style="padding-right:10px;" value="" <?php selected( '', genesis_get_slider_option( 'include_exclude' ) ); ?>><?php _e( 'Select', 'genesis' ); ?></option>
 						<option style="padding-right:10px;" value="include" <?php selected( 'include', genesis_get_slider_option( 'include_exclude' ) ); ?>><?php _e( 'Include', 'genesis' ); ?></option>
 						<option style="padding-right:10px;" value="exclude" <?php selected( 'exclude', genesis_get_slider_option( 'include_exclude' ) ); ?>><?php _e( 'Exclude', 'genesis' ); ?></option>
@@ -257,7 +258,7 @@ function genesis_slider_options_box() {
 				</p>
 
 				<p>
-					<label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[post_id]">List which <strong><?php echo genesis_get_slider_option( 'post_type' ) . ' ' . __( 'ID', 'genesis' ); ?>s</strong> to include/exclude. (1,2,3,4 for example)</label></p>
+					<label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[post_id]"><?php _e( 'List which', 'genesis' ); ?> <strong><?php echo genesis_get_slider_option( 'post_type' ) . ' ' . __( 'ID', 'genesis' ); ?>s</strong> <?php _e( 'to include / exclude. (1,2,3,4 for example)', 'genesis' ); ?></label></p>
 				<p>
 					<input type="text" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[post_id]" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[post_id]" value="<?php echo esc_attr( genesis_get_slider_option( 'post_id' ) ); ?>" style="width:60%;" />
 				</p>
@@ -283,59 +284,67 @@ function genesis_slider_options_box() {
 				</p>
 
 			</div>
-			
+
 			<hr class="div" />
 
 			<h4><?php _e( 'Transition Settings', 'genesis' ); ?></h4>
 
 				<p>
 					<label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_timer]"><?php _e( 'Time Between Slides (in milliseconds)', 'genesis' ); ?>:
-						<input type="text" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_timer]" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_timer]" value="<?php echo genesis_get_slider_option( 'slideshow_timer' ); ?>" size="5" /></label>
+					<input type="text" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_timer]" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_timer]" value="<?php echo genesis_get_slider_option( 'slideshow_timer' ); ?>" size="5" /></label>
 				</p>
 
 				<p>
 					<label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_delay]"><?php _e( 'Slide Transition Speed (in milliseconds)', 'genesis' ); ?>:
-						<input type="text" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_delay]" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_delay]" value="<?php echo genesis_get_slider_option( 'slideshow_delay' ); ?>" size="5" /></label>
+					<input type="text" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_delay]" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_delay]" value="<?php echo genesis_get_slider_option( 'slideshow_delay' ); ?>" size="5" /></label>
 				</p>
 
 			<hr class="div" />
 
 			<h4><?php _e( 'Display Settings', 'genesis' ); ?></h4>
-			
-				<p>
-					<label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_width]"><?php _e( 'Slide Show Width (in pixels)', 'genesis' ); ?>:
-						<input type="text" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_width]" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_width]" value="<?php echo genesis_get_slider_option( 'slideshow_width' ); ?>" size="5" /></label>
-				</p>			
 
 				<p>
-					<label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_height]"><?php _e( 'Slide Show Height (in pixels)', 'genesis' ); ?>:
-						<input type="text" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_height]" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_height]" value="<?php echo genesis_get_slider_option( 'slideshow_height' ); ?>" size="5" /></label>
+					<label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_width]"><?php _e( 'Slider Width (in pixels)', 'genesis' ); ?>:
+					<input type="text" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_width]" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_width]" value="<?php echo genesis_get_slider_option( 'slideshow_width' ); ?>" size="5" /></label>
 				</p>
-				
-			<hr class="div" />
-				
-			<h4><?php _e( 'Excerpt Settings', 'genesis' ); ?></h4>
-				
+
 				<p>
-					<label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_excerpt_width]"><?php _e( 'Slide Show Excerpt Width (in pixels)', 'genesis' ); ?>:
-						<input type="text" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_excerpt_width]" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_excerpt_width]" value="<?php echo genesis_get_slider_option( 'slideshow_excerpt_width' ); ?>" size="5" /></label>
+					<label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_height]"><?php _e( 'Slider Height (in pixels)', 'genesis' ); ?>:
+					<input type="text" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_height]" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_height]" value="<?php echo genesis_get_slider_option( 'slideshow_height' ); ?>" size="5" /></label>
 				</p>
-				
+
+				<p>
+					<input type="checkbox" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_arrows]" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_arrows]" value="1" <?php checked(1, genesis_get_slider_option('slideshow_arrows')); ?> /> <label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_arrows]"><?php _e("Display Next / Previous Arrows in Slider?", 'genesis'); ?></label>
+				</p>
+
+			<hr class="div" />
+
+			<h4><?php _e( 'Excerpt Settings', 'genesis' ); ?></h4>
+
+				<p>
+					<input type="checkbox" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_excerpt_show]" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_excerpt_show]" value="1" <?php checked(1, genesis_get_slider_option('slideshow_excerpt_show')); ?> /> <label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_excerpt_show]"><?php _e("Display Excerpt in Slider?", 'genesis'); ?></label>
+				</p>
+
+				<p>
+					<label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_excerpt_width]"><?php _e( 'Slider Excerpt Width (in pixels)', 'genesis' ); ?>:
+					<input type="text" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_excerpt_width]" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_excerpt_width]" value="<?php echo genesis_get_slider_option( 'slideshow_excerpt_width' ); ?>" size="5" /></label>
+				</p>
+
 				<p>
 					<label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[location_vertical]"><?php _e( 'Excerpt Location (vertical)', 'genesis' ); ?>:</label>
 					<select id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[location_vertical]" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[location_vertical]">
 						<option style="padding-right:10px;" value="top" <?php selected( 'top', genesis_get_slider_option( 'location_vertical' ) ); ?>><?php _e( 'Top', 'genesis' ); ?></option>
 						<option style="padding-right:10px;" value="bottom" <?php selected( 'bottom', genesis_get_slider_option( 'location_vertical' ) ); ?>><?php _e( 'Bottom', 'genesis' ); ?></option>
 					</select>
-				</p>	
-				
+				</p>
+
 				<p>
 					<label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[location_horizontal]"><?php _e( 'Excerpt Location (horizontal)', 'genesis' ); ?>:</label>
 					<select id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[location_horizontal]" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[location_horizontal]">
 						<option style="padding-right:10px;" value="left" <?php selected( 'left', genesis_get_slider_option( 'location_horizontal' ) ); ?>><?php _e( 'Left', 'genesis' ); ?></option>
 						<option style="padding-right:10px;" value="right" <?php selected( 'right', genesis_get_slider_option( 'location_horizontal' ) ); ?>><?php _e( 'Right', 'genesis' ); ?></option>
 					</select>
-				</p>							
+				</p>
 <?php
 }
 
