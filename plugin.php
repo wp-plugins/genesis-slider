@@ -6,7 +6,7 @@
 	Author: StudioPress
 	Author URI: http://www.studiopress.com
 
-	Version: 0.9.1
+	Version: 0.9.2
 
 	License: GNU General Public License v2.0
 	License URI: http://www.opensource.org/licenses/gpl-license.php
@@ -24,6 +24,14 @@ add_action( 'genesis_init', 'GenesisSliderInit', 15 );
  */
 function GenesisSliderInit() {
 
+	/** hook all frontend slider functions here to ensure Genesis is active **/
+	add_action( 'wp_enqueue_scripts', 'genesis_slider_scripts' );
+	add_action( 'wp_print_styles', 'genesis_slider_styles' );
+	add_action( 'wp_head', 'genesis_slider_head', 1 );
+	add_action( 'wp_footer', 'genesis_slider_jflow_params' );
+	add_filter( 'excerpt_more', 'genesis_slider_excerpt_more' );
+	add_action( 'widgets_init', 'Genesis_SliderRegister' );
+	
 	/** Include Admin file */
 	if ( is_admin() ) require_once( dirname( __FILE__ ) . '/admin.php' );
 
@@ -32,7 +40,6 @@ function GenesisSliderInit() {
 
 }
 
-add_action( 'wp_enqueue_scripts', 'genesis_slider_scripts' );
 /**
  * Load the script files
  */
@@ -43,7 +50,6 @@ function genesis_slider_scripts() {
 
 }
 
-add_action( 'wp_print_styles', 'genesis_slider_styles' );
 /**
  * Load the CSS files
  */
@@ -55,7 +61,6 @@ function genesis_slider_styles() {
 
 }
 
-add_action( 'wp_head', 'genesis_slider_head', 1 );
 /**
  * Loads scripts and styles via wp_head hook.
  */
@@ -82,7 +87,6 @@ function genesis_slider_head() {
 		</style>';
 }
 
-add_action( 'wp_footer', 'genesis_slider_jflow_params' );
 /**
  * Outputs slider script on wp_footer hook.
  */
@@ -94,7 +98,7 @@ function genesis_slider_jflow_params() {
 	$width = ( int ) genesis_get_slider_option( 'slideshow_width' );
 
 	$output = 'jQuery(document).ready(function($) {
-					$("#myController").jFlow({
+					$(".myController").jFlow({
 						controller: ".jFlowControl",
 						slideWrapper : "#jFlowSlider",
 						slides: "#slides",
@@ -115,7 +119,6 @@ function genesis_slider_jflow_params() {
 
 }
 
-add_action( 'widgets_init', 'Genesis_SliderRegister' );
 /**
  * Registers the slider widget
  */
@@ -123,7 +126,6 @@ function Genesis_SliderRegister() {
 	register_widget( 'Genesis_SliderWidget' );
 }
 
-add_filter('excerpt_more', 'genesis_slider_excerpt_more');
 /** Creates read more link after excerpt */
 function genesis_slider_excerpt_more($more) {
 	global $post;
@@ -250,7 +252,7 @@ class Genesis_SliderWidget extends WP_Widget {
 				<?php endwhile; ?>
 				</div><!-- end #slides -->
 
-				<div id="myController">
+				<div class="myController">
 					<?php echo $controller; ?>
 				</div><!-- end #myController -->
 

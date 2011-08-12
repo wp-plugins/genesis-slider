@@ -130,7 +130,7 @@
 					clearInterval(timer);
         		timer = setInterval(function() {
 	                	$(opts.next).click();
-						}, 10000);
+						}, opts.timer);
 			}
 		}
 //Pause/Resume function fires at hover
@@ -145,9 +145,9 @@
 		);
 	};
 	$.fn.jFlow.defaults = {
-		controller: "#myController", // must be class, use . sign
-		slideWrapper : "#mySlides", // must be id, use # sign
-		selectedWrapper: ".jFlowSelected",  // just pure text, no sign
+		controller: ".myController", // must be class, use . sign
+		slideWrapper : "#slides", // must be id, use # sign
+		selectedWrapper: "jFlowSelected",  // just pure text, no sign
 		easing: "swing",
 		width: "100%",
 		prev: ".slider-previous", // must be class, use . sign
