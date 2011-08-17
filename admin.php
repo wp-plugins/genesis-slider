@@ -9,7 +9,8 @@
  * @since 0.9
  */
 function genesis_slider_defaults() {
-	return array(
+
+	$defaults = array(
 		'post_type' => 'post',
 		'posts_term' => '',
 		'exclude_terms' => '',
@@ -28,6 +29,9 @@ function genesis_slider_defaults() {
 		'location_vertical' => 'bottom',
 		'location_horizontal' => 'right'
 	);
+
+	return apply_filters( 'genesis_slider_settings_defaults', $defaults );
+
 }
 
 add_action( 'admin_init', 'register_genesis_slider_settings' );
