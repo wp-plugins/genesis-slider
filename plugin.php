@@ -6,7 +6,7 @@
 	Author: StudioPress
 	Author URI: http://www.studiopress.com
 
-	Version: 0.9.2.1
+	Version: 0.9.3
 
 	License: GNU General Public License v2.0
 	License URI: http://www.opensource.org/licenses/gpl-license.php
@@ -24,6 +24,9 @@ add_action( 'genesis_init', 'GenesisSliderInit', 15 );
  */
 function GenesisSliderInit() {
 
+	// translation support
+	load_plugin_textdomain( 'genesis-slider', false, '/genesis-slider/languages/' );
+	
 	/** hook all frontend slider functions here to ensure Genesis is active **/
 	add_action( 'wp_enqueue_scripts', 'genesis_slider_scripts' );
 	add_action( 'wp_print_styles', 'genesis_slider_styles' );
@@ -38,6 +41,40 @@ function GenesisSliderInit() {
 	/** Add new image size */
 	add_image_size( 'slider', ( int ) genesis_get_slider_option( 'slideshow_width' ), ( int ) genesis_get_slider_option( 'slideshow_height' ), TRUE );
 
+}
+
+add_action( 'genesis_settings_sanitizer_init', 'genesis_slider_sanitization' );
+/**
+ * Add settings to Genesis sanitization
+ *
+ */
+function genesis_slider_sanitization() {
+	genesis_add_option_filter( 'one_zero', GENESIS_SLIDER_SETTINGS_FIELD,
+		array(
+			'slideshow_arrows',
+			'slideshow_excerpt_show',
+		) );
+	genesis_add_option_filter( 'no_html', GENESIS_SLIDER_SETTINGS_FIELD,
+		array(
+			'post_type',
+			'posts_term',
+			'exclude_terms',
+			'include_exclude',
+			'post_id',
+			'posts_num',
+			'posts_offset',
+			'orderby',
+			'slideshow_timer',
+			'slideshow_delay',
+			'slideshow_height',
+			'slideshow_width',
+			'slideshow_excerpt_content',
+			'slideshow_excerpt_content_limit',
+			'slideshow_more_text',
+			'slideshow_excerpt_width',
+			'location_vertical',
+			'location_horizontal',
+		) );
 }
 
 /**
@@ -129,7 +166,15 @@ function Genesis_SliderRegister() {
 /** Creates read more link after excerpt */
 function genesis_slider_excerpt_more($more) {
 	global $post;
-	return '&hellip; <a href="'. get_permalink($post->ID) . '">[Continue Reading]</a>';
+	static $read_more = null;
+
+	if ( $read_more === null )
+		$read_more = genesis_get_slider_option( 'slideshow_more_text' );
+
+	if ( !$read_more )
+		return '';
+
+	return '&hellip; <a href="'. get_permalink($post->ID) . '">' . $read_more . '</a>';
 }
 
 /**
@@ -138,9 +183,9 @@ function genesis_slider_excerpt_more($more) {
 class Genesis_SliderWidget extends WP_Widget {
 
 		function Genesis_SliderWidget() {
-			$widget_ops = array( 'classname' => 'genesis_slider', 'description' => __( 'Displays a slideshow inside a widget area' ) );
+			$widget_ops = array( 'classname' => 'genesis_slider', 'description' => __( 'Displays a slideshow inside a widget area', 'genesis-slider' ) );
 			$control_ops = array( 'width' => 200, 'height' => 250, 'id_base' => 'genesisslider-widget' );
-			$this->WP_Widget( 'genesisslider-widget', __( 'Genesis - Slider' ), $widget_ops, $control_ops );
+			$this->WP_Widget( 'genesisslider-widget', __( 'Genesis - Slider', 'genesis-slider' ), $widget_ops, $control_ops );
 		}
 
 		function save_settings( $settings ) {
@@ -229,17 +274,30 @@ class Genesis_SliderWidget extends WP_Widget {
 					<?php
 						$controller = '';
 						$slider_posts = new WP_Query( $query_args );
+						if ( $slider_posts->have_posts() ) {
+							$show_excerpt = genesis_get_slider_option( 'slideshow_excerpt_show' );
+							$show_type = genesis_get_slider_option( 'slideshow_excerpt_content' );
+							$show_limit = genesis_get_slider_option( 'slideshow_excerpt_content_limit' );
+							$more_text = genesis_get_slider_option( 'slideshow_more_text' );
+						} 
 						while ( $slider_posts->have_posts() ) : $slider_posts->the_post();
 						$controller .= '<span class="jFlowControl"></span>';
 					?>
 					<div>
 
-					<?php if ( genesis_get_slider_option( 'slideshow_excerpt_show' ) == 1 ) { ?>
+					<?php if ( $show_excerpt == 1 ) { ?>
 						<div class="slide-excerpt">
 							<div class="slide-background"></div><!-- end .slide-background -->
 							<div class="slide-excerpt-border ">
 								<h2><a href="<?php the_permalink() ?>" rel="bookmark"><?php the_title(); ?></a></h2>
-								<?php the_excerpt(); ?>
+								<?php 
+									if ( $show_type != 'full' )
+										the_excerpt();
+									elseif ( $show_limit )
+										the_content_limit( (int)$show_limit, esc_html( $more_text ) );
+									else
+										the_content( esc_html( $more_text ) );
+								?>
 							</div><!-- end .slide-excerpt-border  -->
 						</div><!-- end .slide-excerpt -->
 					<?php } ?>
