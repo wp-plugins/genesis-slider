@@ -113,7 +113,7 @@ function genesis_slider_head() {
 		$horizontal = genesis_get_slider_option( 'location_horizontal' );
 
 		echo '
-		<style>
+		<style type="text/css">
 			#previous a img { background: transparent url(' . CHILD_URL . '/images/slider-previous.png) no-repeat; }
 			#next a img { background: transparent url(' . CHILD_URL . '/images/slider-next.png) no-repeat; }
 			#genesis-slider, #slides, .genesis-slider-wrap { height: ' . $height . 'px; width: ' . $width . 'px; }
