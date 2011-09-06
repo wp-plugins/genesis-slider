@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-23 10:28-0300\n"
+"POT-Creation-Date: 2011-09-06 14:55-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,7 +36,7 @@ msgstr ""
 msgid "Genesis Slider Settings"
 msgstr ""
 
-#: admin.php:147 plugin.php:188
+#: admin.php:147 plugin.php:190
 msgid "Genesis - Slider"
 msgstr ""
 
@@ -170,81 +170,89 @@ msgid "Display Next / Previous Arrows in Slider?"
 msgstr ""
 
 #: admin.php:329
-msgid "Excerpt Settings"
+msgid "Content Settings"
 msgstr ""
 
 #: admin.php:332
-msgid "Display Excerpt in Slider?"
+msgid "Display Post/Page Title in Slider?"
 msgstr ""
 
-#: admin.php:336
-msgid "Select one of the following:"
-msgstr ""
-
-#: admin.php:338
-msgid "Display post content"
+#: admin.php:335
+msgid "Display Content in Slider?"
 msgstr ""
 
 #: admin.php:339
+msgid "Select one of the following:"
+msgstr ""
+
+#: admin.php:341
+msgid "Display post content"
+msgstr ""
+
+#: admin.php:342
 msgid "Display post excerpts"
 msgstr ""
 
-#: admin.php:344
+#: admin.php:347
 msgid "More Text (if applicable)"
 msgstr ""
 
-#: admin.php:349
+#: admin.php:352
 msgid "Limit content to"
 msgstr ""
 
-#: admin.php:351
+#: admin.php:354
 msgid "characters"
 msgstr ""
 
-#: admin.php:354
+#: admin.php:357
 msgid ""
 "Using this option will limit the text and strip all formatting from the text "
 "displayed. To use this option, choose \"Display post content\" in the select "
 "box above."
 msgstr ""
 
-#: admin.php:357
+#: admin.php:360
 msgid "Slider Excerpt Width (in pixels)"
 msgstr ""
 
-#: admin.php:362
+#: admin.php:365
 msgid "Excerpt Location (vertical)"
 msgstr ""
 
-#: admin.php:364
+#: admin.php:367
 msgid "Top"
 msgstr ""
 
-#: admin.php:365
+#: admin.php:368
 msgid "Bottom"
 msgstr ""
 
-#: admin.php:370
+#: admin.php:373
 msgid "Excerpt Location (horizontal)"
 msgstr ""
 
-#: admin.php:372
+#: admin.php:375
 msgid "Left"
 msgstr ""
 
-#: admin.php:373
+#: admin.php:376
 msgid "Right"
 msgstr ""
 
-#: admin.php:383
+#: admin.php:386
 msgid "Save Changes"
 msgstr ""
 
-#: plugin.php:186
+#: plugin.php:188
 msgid "Displays a slideshow inside a widget area"
 msgstr ""
 
-#: plugin.php:334
+#: plugin.php:347
+msgid "Title:"
+msgstr ""
+
+#: plugin.php:350
 #, php-format
 msgid ""
 "To configure slider options, please go to the <a href=\"%s\">Slider "

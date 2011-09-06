@@ -144,7 +144,7 @@ function genesis_slider_settings_admin() {
 
 			<?php screen_icon( 'plugins' ); ?>
 			<h2>
-				<?php _e( 'Genesis - Slider' ); ?>
+				<?php _e( 'Genesis - Slider', 'genesis-slider' ); ?>
 				<input type="submit" class="button-primary genesis-h2-button" value="<?php _e( 'Save Settings', 'genesis-slider' ) ?>" />
 				<input type="submit" class="button-highlighted genesis-h2-button" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[reset]" value="<?php _e( 'Reset Settings', 'genesis-slider' ); ?>" onclick="return genesis_confirm('<?php echo esc_js( __( 'Are you sure you want to reset?', 'genesis-slider' ) ); ?>');" />
 			</h2>
@@ -326,10 +326,13 @@ function genesis_slider_options_box() {
 
 			<hr class="div" />
 
-			<h4><?php _e( 'Excerpt Settings', 'genesis-slider' ); ?></h4>
+			<h4><?php _e( 'Content Settings', 'genesis-slider' ); ?></h4>
 
 				<p>
-					<input type="checkbox" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_excerpt_show]" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_excerpt_show]" value="1" <?php checked(1, genesis_get_slider_option('slideshow_excerpt_show')); ?> /> <label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_excerpt_show]"><?php _e( 'Display Excerpt in Slider?', 'genesis-slider' ); ?></label>
+					<input type="checkbox" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_title_show]" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_title_show]" value="1" <?php checked(1, genesis_get_slider_option('slideshow_title_show')); ?> /> <label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_title_show]"><?php _e( 'Display Post/Page Title in Slider?', 'genesis-slider' ); ?></label>
+				</p>
+				<p>
+					<input type="checkbox" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_excerpt_show]" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_excerpt_show]" value="1" <?php checked(1, genesis_get_slider_option('slideshow_excerpt_show')); ?> /> <label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_excerpt_show]"><?php _e( 'Display Content in Slider?', 'genesis-slider' ); ?></label>
 				</p>
 				
 				<p>

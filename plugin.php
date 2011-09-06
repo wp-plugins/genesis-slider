@@ -6,7 +6,7 @@
 	Author: StudioPress
 	Author URI: http://www.studiopress.com
 
-	Version: 0.9.3
+	Version: 0.9.4
 
 	License: GNU General Public License v2.0
 	License URI: http://www.opensource.org/licenses/gpl-license.php
@@ -53,6 +53,7 @@ function genesis_slider_sanitization() {
 		array(
 			'slideshow_arrows',
 			'slideshow_excerpt_show',
+			'slideshow_title_show',
 		) );
 	genesis_add_option_filter( 'no_html', GENESIS_SLIDER_SETTINGS_FIELD,
 		array(
@@ -111,6 +112,7 @@ function genesis_slider_head() {
 
 		$vertical = genesis_get_slider_option( 'location_vertical' );
 		$horizontal = genesis_get_slider_option( 'location_horizontal' );
+		$display = ( genesis_get_slider_option( 'posts_num' ) >= 2 && genesis_get_slider_option( 'slideshow_arrows' ) ) ? 'top: ' . $slideNavTop . 'px' : 'display: none';
 
 		echo '
 		<style type="text/css">
@@ -120,7 +122,7 @@ function genesis_slider_head() {
 			.slide-excerpt { width: ' . $slideInfoWidth . 'px; }
 			.slide-excerpt { ' . $vertical . ': 0; }
 			.slide-excerpt { '. $horizontal . ': 0; }
-			.slider-next, .slider-previous { top: ' . $slideNavTop . 'px };
+			div.slider-next, div.slider-previous { ' . $display . ' };
 		</style>';
 }
 
@@ -199,6 +201,10 @@ class Genesis_SliderWidget extends WP_Widget {
 
 			echo $before_widget;
 
+			$title = apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base );
+			if ( $title )
+				echo $before_title . $title . $after_title;
+
 			$term_args = array( );
 
 			if ( 'page' != genesis_get_slider_option( 'post_type' ) ) {
@@ -276,6 +282,7 @@ class Genesis_SliderWidget extends WP_Widget {
 						$slider_posts = new WP_Query( $query_args );
 						if ( $slider_posts->have_posts() ) {
 							$show_excerpt = genesis_get_slider_option( 'slideshow_excerpt_show' );
+							$show_title = genesis_get_slider_option( 'slideshow_title_show' );
 							$show_type = genesis_get_slider_option( 'slideshow_excerpt_content' );
 							$show_limit = genesis_get_slider_option( 'slideshow_excerpt_content_limit' );
 							$more_text = genesis_get_slider_option( 'slideshow_more_text' );
@@ -285,18 +292,24 @@ class Genesis_SliderWidget extends WP_Widget {
 					?>
 					<div>
 
-					<?php if ( $show_excerpt == 1 ) { ?>
+					<?php if ( $show_excerpt == 1 || $show_title == 1 ) { ?>
 						<div class="slide-excerpt">
 							<div class="slide-background"></div><!-- end .slide-background -->
 							<div class="slide-excerpt-border ">
+								<?php
+									if ( $show_title == 1 ) { 
+								?>
 								<h2><a href="<?php the_permalink() ?>" rel="bookmark"><?php the_title(); ?></a></h2>
 								<?php 
-									if ( $show_type != 'full' )
-										the_excerpt();
-									elseif ( $show_limit )
-										the_content_limit( (int)$show_limit, esc_html( $more_text ) );
-									else
-										the_content( esc_html( $more_text ) );
+									}
+									if ( $show_excerpt ) {
+										if ( $show_type != 'full' )
+											the_excerpt();
+										elseif ( $show_limit )
+											the_content_limit( (int)$show_limit, esc_html( $more_text ) );
+										else
+											the_content( esc_html( $more_text ) );
+									}
 								?>
 							</div><!-- end .slide-excerpt-border  -->
 						</div><!-- end .slide-excerpt -->
@@ -314,10 +327,8 @@ class Genesis_SliderWidget extends WP_Widget {
 					<?php echo $controller; ?>
 				</div><!-- end #myController -->
 
-				<?php if ( genesis_get_slider_option( 'posts_num' ) >= 2 && genesis_get_slider_option( 'slideshow_arrows' ) ) { ?>
-					<div class="slider-previous"></div>
-					<div class="slider-next"></div>
-				<?php } ?>
+				<div class="slider-previous"></div>
+				<div class="slider-next"></div>
 
 			</div><!-- end .genesis-slider-wrap -->
 		</div><!-- end #genesis-slider -->
@@ -330,9 +341,21 @@ class Genesis_SliderWidget extends WP_Widget {
 
 		/** Widget options */
 		function form( $instance ) {
+			$instance = wp_parse_args( (array) $instance, array( 'title' => '') );
+			$title = $instance['title'];
+?>
+		<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'genesis-slider' ); ?> <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" /></label></p>
+<?php
 			echo '<p>';
 			printf( __( 'To configure slider options, please go to the <a href="%s">Slider Settings</a> page.', 'genesis-slider' ), menu_page_url( 'genesis_slider', 0 ) );
 			echo '</p>';
+		}
+
+		function update( $new_instance, $old_instance ) {
+			$instance = $old_instance;
+			$new_instance = wp_parse_args( (array) $new_instance, array( 'title' => '' ) );
+			$instance['title'] = strip_tags( $new_instance['title'] );
+			return $instance;
 		}
 
 }
