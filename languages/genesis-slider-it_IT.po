@@ -1,0 +1,261 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Genesis Slider in italiano\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-09-06 22:53+0100\n"
+"PO-Revision-Date: 2011-09-06 23:07+0100\n"
+"Last-Translator: Gianni Diurno (aka gidibao) <gidibao[at]gmail[dot]com>\n"
+"Language-Team: Gianni Diurno | gidibao.net & charmingpress,com\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Italian\n"
+"X-Poedit-Country: ITALY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: admin.php:29
+msgid "[Continue Reading]"
+msgstr "[Prosegui la lettura]"
+
+#: admin.php:72
+msgid "Settings reset."
+msgstr "Le impostazioni sono state ripristinate."
+
+#: admin.php:74
+msgid "Settings saved."
+msgstr "Le impostazioni sono state salvate."
+
+#: admin.php:87
+msgid "Slider Settings"
+msgstr "Impostazioni slider"
+
+#: admin.php:109
+msgid "Genesis Slider Settings"
+msgstr "Genesis Slider - Impostazioni"
+
+#: admin.php:147
+#: plugin.php:190
+msgid "Genesis - Slider"
+msgstr "Genesis - Slider"
+
+#: admin.php:148
+#: admin.php:159
+msgid "Save Settings"
+msgstr "Salva le impostazioni"
+
+#: admin.php:149
+#: admin.php:160
+msgid "Reset Settings"
+msgstr "Ripristina le impostazioni"
+
+#: admin.php:149
+msgid "Are you sure you want to reset?"
+msgstr "Sei certo di volere ripristinare?"
+
+#: admin.php:189
+msgid "Type of Content"
+msgstr "Tipo di contenuto"
+
+#: admin.php:191
+msgid "Would you like to use posts or pages"
+msgstr "Desideri utilizzare articoli o pagine"
+
+#: admin.php:210
+msgid "By Taxonomy and Terms"
+msgstr "Per tassonomina e termini"
+
+#: admin.php:210
+msgid "Choose a term to determine what slides to include"
+msgstr "Scegli un termine per determinare quali slide includere"
+
+#: admin.php:214
+msgid "All Taxonomies and Terms"
+msgstr "Tutte le tassonomie e termini"
+
+#: admin.php:241
+msgid "Include or Exclude by Taxonomy ID"
+msgstr "Includi o escludi per ID tassonomia"
+
+#: admin.php:244
+msgid "List which category, tag or other taxonomy IDs to include / exclude. (1,2,3,4 for example)"
+msgstr "Elenca quale categoria, tag o altra ID categoria da includere / escludere. (1,2,3,4 ad esempio)"
+
+#: admin.php:254
+#, php-format
+msgid "Include or Exclude by %s ID"
+msgstr "Includi o Escludi per ID %s"
+
+#: admin.php:257
+msgid "Choose the include / exclude slides using their post / page ID in a comma-separated list. (1,2,3,4 for example)"
+msgstr "Scegli le slide da includere / escludere utilizzando la loro ID articolo / pagina separandola con delle virgole. (1,2,3,4 ad esempio)"
+
+#: admin.php:261
+msgid "Select"
+msgstr "Seleziona"
+
+#: admin.php:262
+msgid "Include"
+msgstr "Includi"
+
+#: admin.php:263
+msgid "Exclude"
+msgstr "Escludi"
+
+#: admin.php:268
+msgid "List which"
+msgstr "Elenca quale"
+
+#: admin.php:268
+#: admin.php:288
+msgid "ID"
+msgstr "ID"
+
+#: admin.php:268
+msgid "to include / exclude. (1,2,3,4 for example)"
+msgstr "da includere / escludere. (1,2,3,4 ad esempio)"
+
+#: admin.php:274
+msgid "Number of Slides to Show"
+msgstr "Numero di slide da mostrare"
+
+#: admin.php:279
+msgid "Number of Posts to Offset"
+msgstr "Numero di articoli (offset)"
+
+#: admin.php:284
+msgid "Order By"
+msgstr "Disponi per"
+
+#: admin.php:286
+msgid "Date"
+msgstr "data"
+
+#: admin.php:287
+msgid "Title"
+msgstr "titolo"
+
+#: admin.php:289
+msgid "Random"
+msgstr "casuale"
+
+#: admin.php:297
+msgid "Transition Settings"
+msgstr "Impostazioni transizione"
+
+#: admin.php:300
+msgid "Time Between Slides (in milliseconds)"
+msgstr "Tempo tra le slide (in millisecondi)"
+
+#: admin.php:305
+msgid "Slide Transition Speed (in milliseconds)"
+msgstr "Velocità transizione slide (in millisecondi)"
+
+#: admin.php:311
+msgid "Display Settings"
+msgstr "Impostazioni visualizzzazione"
+
+#: admin.php:314
+msgid "Slider Width (in pixels)"
+msgstr "Larghezza slider (in pixel)"
+
+#: admin.php:319
+msgid "Slider Height (in pixels)"
+msgstr "Altezza slider (in pixel)"
+
+#: admin.php:324
+msgid "Display Next / Previous Arrows in Slider?"
+msgstr "Mostrare nello slider le frecce Successiva / Precedente?"
+
+#: admin.php:329
+msgid "Content Settings"
+msgstr "Impostazioni contenuto"
+
+#: admin.php:332
+msgid "Display Post/Page Title in Slider?"
+msgstr "Mostrare nello slider titolo Articolo/Pagina?"
+
+#: admin.php:335
+msgid "Display Content in Slider?"
+msgstr "Mostrare nello slider il contenuto?"
+
+#: admin.php:339
+msgid "Select one of the following:"
+msgstr "Seleziona uno dei seguenti:"
+
+#: admin.php:341
+msgid "Display post content"
+msgstr "Mostra contenuto articolo"
+
+#: admin.php:342
+msgid "Display post excerpts"
+msgstr "Mostra riassunto articoli"
+
+#: admin.php:347
+msgid "More Text (if applicable)"
+msgstr "Testo More (se utilizzabile)"
+
+#: admin.php:352
+msgid "Limit content to"
+msgstr "Limita il contenuto a"
+
+#: admin.php:354
+msgid "characters"
+msgstr "caratteri"
+
+#: admin.php:357
+msgid "Using this option will limit the text and strip all formatting from the text displayed. To use this option, choose \"Display post content\" in the select box above."
+msgstr "Utilizza questa opzione per limitare e rimuovere la formattazione del testo che sarà visibile. Per usare questa opzione, scegli \"Mostra contenuto articolo\" nella casella di selezione qui sopra."
+
+#: admin.php:360
+msgid "Slider Excerpt Width (in pixels)"
+msgstr "Larghezza riassunto slider (in pixel)"
+
+#: admin.php:365
+msgid "Excerpt Location (vertical)"
+msgstr "Posizione riassunto (verticale)"
+
+#: admin.php:367
+msgid "Top"
+msgstr "sopra"
+
+#: admin.php:368
+msgid "Bottom"
+msgstr "sotto"
+
+#: admin.php:373
+msgid "Excerpt Location (horizontal)"
+msgstr "Posizione riassunto (orizzontale)"
+
+#: admin.php:375
+msgid "Left"
+msgstr "sinistra"
+
+#: admin.php:376
+msgid "Right"
+msgstr "destra"
+
+#: admin.php:386
+msgid "Save Changes"
+msgstr "Salva le modifiche"
+
+#: plugin.php:188
+msgid "Displays a slideshow inside a widget area"
+msgstr "Mostra lo slider dentro un'area widget"
+
+#: plugin.php:347
+msgid "Title:"
+msgstr "Titolo:"
+
+#: plugin.php:350
+#, php-format
+msgid "To configure slider options, please go to the <a href=\"%s\">Slider Settings</a> page."
+msgstr "Per la configurazione delle opzioni dello slider, vai alla pagina <a href=\"%s\">Impostazioni slider</a>."
+

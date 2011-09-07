@@ -1,0 +1,316 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Genesis Slider (Plugin) for Genesis Framework\n"
+"Report-Msgid-Bugs-To: http://www.studiopress.com/support/forumdisplay.php?f=142\n"
+"POT-Creation-Date: 2011-08-23 19:52+0000\n"
+"PO-Revision-Date: 2011-09-07 11:45+0100\n"
+"Last-Translator: David Decker <deckerweb.mobil@googlemail.com>\n"
+"Language-Team: DECKERWEB <deckerweb.mobil@googlemail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Textdomain-Support: yes\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#@ genesis-slider
+#: admin.php:72
+msgid "Settings reset."
+msgstr "Einstellungen zur&uuml;ckgesetzt."
+
+#@ genesis-slider
+#: admin.php:74
+msgid "Settings saved."
+msgstr "Einstellungen gespeichert."
+
+#@ genesis-slider
+#: admin.php:87
+msgid "Slider Settings"
+msgstr "Slider-Einstellungen"
+
+#@ genesis-slider
+#: admin.php:109
+msgid "Genesis Slider Settings"
+msgstr "Genesis Slider-Einstellungen"
+
+#@ genesis-slider
+#: admin.php:147
+#: plugin.php:190
+msgid "Genesis - Slider"
+msgstr "Genesis - Slider"
+
+#@ genesis-slider
+#@ genesis
+#: admin.php:148
+#: admin.php:159
+msgid "Save Settings"
+msgstr "Einstellungen speichern"
+
+#@ genesis-slider
+#: admin.php:149
+#: admin.php:160
+msgid "Reset Settings"
+msgstr "Einstellungen zur&uuml;cksetzen"
+
+#@ genesis-slider
+#: admin.php:149
+msgid "Are you sure you want to reset?"
+msgstr "Sind Sie sicher, dass Sie die Einstellungen zur&uuml;cksetzen wollen?"
+
+#@ genesis-slider
+#: admin.php:189
+msgid "Type of Content"
+msgstr "Inhaltstyp"
+
+#@ genesis-slider
+#: admin.php:191
+msgid "Would you like to use posts or pages"
+msgstr "Wollen Sie Beitr&auml;ge (Artikel) oder Seiten nutzen"
+
+#@ genesis-slider
+#: admin.php:210
+msgid "By Taxonomy and Terms"
+msgstr "Nach Taxonomie und Terms"
+
+#@ genesis-slider
+#: admin.php:210
+msgid "Choose a term to determine what slides to include"
+msgstr "W&auml;hlen Sie einen Term, um zu bestimmen, welche Slides eingeschlossen (enthalten) sein werden"
+
+#@ genesis-slider
+#: admin.php:214
+msgid "All Taxonomies and Terms"
+msgstr "Alle Taxonomien und Terms"
+
+#@ genesis-slider
+#: admin.php:241
+msgid "Include or Exclude by Taxonomy ID"
+msgstr "Einschlie&szlig;en oder ausschlie&szlig;en nach Taxonomie-ID"
+
+#@ genesis-slider
+#: admin.php:244
+msgid "List which category, tag or other taxonomy IDs to include / exclude. (1,2,3,4 for example)"
+msgstr "Listen Sie auf, welche Kategorie, welches Schlagwort oder welche Taxonomie-IDs ein- oder ausgeschlossen werden sollen (z.B. 1,2,3,4)"
+
+#@ genesis-slider
+#: admin.php:254
+#, php-format
+msgid "Include or Exclude by %s ID"
+msgstr "Einschlie&szlig;en oder ausschlie&szlig;en nach %s ID"
+
+#@ genesis-slider
+#: admin.php:257
+msgid "Choose the include / exclude slides using their post / page ID in a comma-separated list. (1,2,3,4 for example)"
+msgstr "W&auml;hlen Sie ein- oder auszuschlie&szlig;enden Slides aufgrund ihrer Beitrags-/ Seiten-ID aus, in einer kommagetrennten Liste (z.B. 1,2,3,4)"
+
+#@ genesis-slider
+#: admin.php:261
+msgid "Select"
+msgstr "Ausw&auml;hlen"
+
+#@ genesis-slider
+#: admin.php:262
+msgid "Include"
+msgstr "Einschlie&szlig;en"
+
+#@ genesis-slider
+#: admin.php:263
+msgid "Exclude"
+msgstr "Ausschlie&szlig;en"
+
+#@ genesis-slider
+#: admin.php:268
+msgid "List which"
+msgstr "Auflisten welche"
+
+#@ genesis-slider
+#: admin.php:268
+#: admin.php:288
+msgid "ID"
+msgstr "ID"
+
+#@ genesis-slider
+#: admin.php:268
+msgid "to include / exclude. (1,2,3,4 for example)"
+msgstr "ein- oder ausgeschlossen werden soll (z.B. 1,2,3,4)"
+
+#@ genesis-slider
+#: admin.php:274
+msgid "Number of Slides to Show"
+msgstr "Anzahl der Slides, die angezeigt werden sollen"
+
+#@ genesis-slider
+#: admin.php:279
+msgid "Number of Posts to Offset"
+msgstr "Anzahl der Beitr&auml;ge, die &uuml;bersprungen werden sollen (Versatz/ Offset)"
+
+#@ genesis-slider
+#: admin.php:284
+msgid "Order By"
+msgstr "Sortieren nach"
+
+#@ genesis-slider
+#: admin.php:286
+msgid "Date"
+msgstr "Datum"
+
+#@ genesis-slider
+#: admin.php:287
+msgid "Title"
+msgstr "Titel"
+
+#@ genesis-slider
+#: admin.php:289
+msgid "Random"
+msgstr "Zuf&auml;llig"
+
+#@ genesis-slider
+#: admin.php:297
+msgid "Transition Settings"
+msgstr "Einstellungen f&uuml;r die &Uuml;berg&auml;nge"
+
+#@ genesis-slider
+#: admin.php:300
+msgid "Time Between Slides (in milliseconds)"
+msgstr "Zeit zwischen Slides (in Millisekunden)"
+
+#@ genesis-slider
+#: admin.php:305
+msgid "Slide Transition Speed (in milliseconds)"
+msgstr "Slide-&Uuml;bergangsgeschwindigkeit (in Millisekunden)"
+
+#@ genesis-slider
+#: admin.php:311
+msgid "Display Settings"
+msgstr "Anzeige-Einstellungen"
+
+#@ genesis-slider
+#: admin.php:314
+msgid "Slider Width (in pixels)"
+msgstr "Slider-Breite (in Pixeln)"
+
+#@ genesis-slider
+#: admin.php:319
+msgid "Slider Height (in pixels)"
+msgstr "Slider-H&ouml;he (in Pixeln)"
+
+#@ genesis-slider
+#: admin.php:324
+msgid "Display Next / Previous Arrows in Slider?"
+msgstr "Zur&uuml;ck-/ Weiter-Pfeile im Slider anzeigen?"
+
+#@ genesis-slider
+#: admin.php:360
+msgid "Slider Excerpt Width (in pixels)"
+msgstr "Slider-Textauszugsbreite (in Pixeln)"
+
+#@ genesis-slider
+#: admin.php:365
+msgid "Excerpt Location (vertical)"
+msgstr "Platzierung des Textauszugs (senkrecht)"
+
+#@ genesis-slider
+#: admin.php:367
+msgid "Top"
+msgstr "Oben"
+
+#@ genesis-slider
+#: admin.php:368
+msgid "Bottom"
+msgstr "Unten"
+
+#@ genesis-slider
+#: admin.php:373
+msgid "Excerpt Location (horizontal)"
+msgstr "Platzierung des Textauszugs (waagerecht)"
+
+#@ genesis-slider
+#: admin.php:375
+msgid "Left"
+msgstr "Links"
+
+#@ genesis-slider
+#: admin.php:376
+msgid "Right"
+msgstr "Rechts"
+
+#@ genesis-slider
+#: admin.php:386
+msgid "Save Changes"
+msgstr "&Auml;nderungen speichern"
+
+#@ genesis-slider
+#: plugin.php:188
+msgid "Displays a slideshow inside a widget area"
+msgstr "Zeigt eine Slideshow innerhalb eines Widget-Bereiches an."
+
+#@ genesis-slider
+#: plugin.php:350
+#, php-format
+msgid "To configure slider options, please go to the <a href=\"%s\">Slider Settings</a> page."
+msgstr "Um die Slider-Einstellungen festzulegen, gehen Sie bitte zur <a href=\"%s\">Slider-Einstellungen-Seite</a>."
+
+#@ genesis-slider
+#: admin.php:29
+msgid "[Continue Reading]"
+msgstr "[Weiterlesen]"
+
+#@ genesis-slider
+#: admin.php:339
+msgid "Select one of the following:"
+msgstr "W&auml;hlen Sie eine der folgenden Einstellungen:"
+
+#@ genesis-slider
+#: admin.php:341
+msgid "Display post content"
+msgstr "Inhalt anzeigen"
+
+#@ genesis-slider
+#: admin.php:342
+msgid "Display post excerpts"
+msgstr "Textauszug anzeigen"
+
+#@ genesis-slider
+#: admin.php:347
+msgid "More Text (if applicable)"
+msgstr "Mehr-Text (falls vorhanden)"
+
+#@ genesis-slider
+#: admin.php:352
+msgid "Limit content to"
+msgstr "Inhalt beschr&auml;nken auf"
+
+#@ genesis-slider
+#: admin.php:354
+msgid "characters"
+msgstr "Zeichen"
+
+#@ genesis-slider
+#: admin.php:357
+msgid "Using this option will limit the text and strip all formatting from the text displayed. To use this option, choose \"Display post content\" in the select box above."
+msgstr "Wenn Sie diese Einstellung benutzen, wird der Text begrenzt und alle Formatierungen vom angezeigten Text entfernt. Um diese Option zu nutzen, w&auml;hlen Sie bitte \"Inhalt anzeigen\" im Auswahlfeld oben."
+
+#@ genesis-slider
+#: admin.php:329
+msgid "Content Settings"
+msgstr "Inhalte-Einstellungen"
+
+#@ genesis-slider
+#: admin.php:332
+msgid "Display Post/Page Title in Slider?"
+msgstr "Beitrags-/ Seitentitel im Slider anzeigen?"
+
+#@ genesis-slider
+#: admin.php:335
+msgid "Display Content in Slider?"
+msgstr "Inhalt im Slider anzeigen?"
+
+#@ genesis-slider
+#: plugin.php:347
+msgid "Title:"
+msgstr "Titel:"
+

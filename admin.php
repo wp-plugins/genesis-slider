@@ -156,7 +156,7 @@ function genesis_slider_settings_admin() {
 			</div>
 
 			<div class="bottom-buttons">
-				<input type="submit" class="button-primary" value="<?php _e('Save Settings', 'genesis') ?>" />
+				<input type="submit" class="button-primary" value="<?php _e('Save Settings', 'genesis-slider') ?>" />
 				<input type="submit" class="button-highlighted" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[reset]" value="<?php _e( 'Reset Settings', 'genesis-slider' ); ?>" />
 			</div>
 
@@ -308,7 +308,7 @@ function genesis_slider_options_box() {
 
 			<hr class="div" />
 
-			<h4><?php _e( 'Display Settings', 'genesis' ); ?></h4>
+			<h4><?php _e( 'Display Settings', 'genesis-slider' ); ?></h4>
 
 				<p>
 					<label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_width]"><?php _e( 'Slider Width (in pixels)', 'genesis-slider' ); ?>:
