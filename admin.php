@@ -344,7 +344,7 @@ function genesis_slider_options_box() {
 				</p>
 
 				<p>
-					<label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_excerpt_more_text]"><?php _e( 'More Text (if applicable)', 'genesis-slider' ); ?>:</label>
+					<label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_more_text]"><?php _e( 'More Text (if applicable)', 'genesis-slider' ); ?>:</label>
 					<input type="text" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_more_text]" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_more_text]" value="<?php echo esc_attr( genesis_get_option( 'slideshow_more_text', GENESIS_SLIDER_SETTINGS_FIELD ) ); ?>" />
 				</p>
 			
