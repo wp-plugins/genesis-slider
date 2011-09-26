@@ -3,6 +3,8 @@
  * jFlow 1.2 (Plus)
  * Version: jFlow Plus
  * Requires: jQuery 1.2+
+ * 
+ * modified by StudioPress to add loop; scroll- up, down, left; cover- up, down, left, right; fade; wipe
  */
 
 (function($) {
@@ -12,18 +14,22 @@
 		var jFC = opts.controller;
 		var jFS =  opts.slideWrapper;
 		var jSel = opts.selectedWrapper;
-		var cur = 0;
-		var timer;
 		var maxi = $(jFC).length;
+		var cur = (opts.effect == 'up' || opts.effect == 'left') ? maxi - 1 : 0;
+		var timer;
 		// sliding function
 		var slide = function (dur, i) {
 			$(opts.slides).children().css({
 				overflow:"hidden"
 			});
 			$(opts.slides + " iframe").hide().addClass("temp_hide");
-			$(opts.slides).animate({
-				marginLeft: "-" + (i * $(opts.slides).find(":first-child").width() + "px")
-				},
+			if (opts.vertical)
+				animation = { marginTop: "-" + (i * $(opts.slides).find(":first-child").height()) + "px" };
+			else
+				animation = { marginLeft: "-" + (i * $(opts.slides).find(":first-child").width()) + "px" };
+			
+			$(opts.slides).animate(
+				animation,
 				opts.duration*(dur),
 				opts.easing,
 
@@ -34,6 +40,77 @@
 					$(".temp_hide").show();
 				}
 			);
+		}
+		var fade = function (i) {
+			$(opts.slides+' > .jFlowSlideContainer:eq(' + ((i == 0 ? maxi : i) - 1) + ')').fadeOut(opts.duration,'linear',function(){
+				$(opts.slides+' > .jFlowSlideContainer').hide();
+				if (i < maxi)
+					$(opts.slides+' > .jFlowSlideContainer:eq(' + i + ')').fadeIn(opts.duration / 2,opts.easing);
+				else
+					$(opts.slides+' > .jFlowSlideContainer:eq(0)').fadeIn(opts.duration / 2,opts.easing);
+			});
+		}
+		var wipe = function (i) {
+			var slide = $(opts.slides+' > .jFlowSlideContainer:eq(' + i + ')');
+
+			gseffect({
+					marginTop: (slide.height() * (i == 0 ? -1 : -2)) + 'px',
+					marginLeft: (slide.width() * -1) + 'px'
+				},
+				slide,
+				i);
+		}
+		var cover = function (dir,i) {
+			var slide = $(opts.slides+' > .jFlowSlideContainer:eq(' + i + ')');
+			var tstart,tleft;
+
+			switch(dir) {
+				case 'up':
+					tstart = (i == 0 ? 1 : 0);
+					tleft = 0;
+					break;
+				case 'down':
+					tstart = (i == 0 ? -1 : -2);
+					tleft = 0;
+					break;
+				case 'left':
+					tstart = (i == 0 ? 0 : -1);
+					tleft = 1;
+					break;
+				case 'right':
+					tstart = (i == 0 ? 0 : -1);
+					tleft = -1;
+					break;
+			}
+
+			gseffect({
+					marginTop: (slide.height() * tstart) + 'px',
+					marginLeft: (slide.width() * tleft) + 'px'
+				}, 
+				slide,
+				i);
+		}
+		var gseffect = function (start,slide,i) {
+			if (i == 0)
+				$(opts.slides+' > .jFlowSlideContainer:eq(' + (maxi - 1) + ')').css({ position: 'absolute' });
+			slide.css({ zIndex: 10 });
+			slide.css(start);
+			slide.show();
+			slide.animate({
+					marginTop: (slide.height() * (i == 0 ? 0 : -1)) + 'px',
+					marginLeft: '0px'
+				},
+				opts.duration,
+				opts.easing,
+				function() {
+					$(opts.slides+' > .jFlowSlideContainer:eq(' + ((i == 0 ? maxi : i) - 1) + ')').hide().css({ position: 'relative' });
+					slide.css({
+						zIndex: 0,
+						marginTop: '0px',
+						marginLeft: '0px'
+					});
+				}
+			);					 
 		}
 		$(this).find(jFC).each(function(i){
 			$(this).click(function(){
@@ -52,6 +129,7 @@
 			$(this).before('<div class="jFlowSlideContainer"></div>').appendTo($(this).prev());
 		});
 		//initialize the controller
+		opts.vertical=(opts.effect=='up'||opts.effect=='down')?1:0;
 		$(jFC).eq(cur).addClass(jSel);
 		var resize = function (x){
 			$(jFS).css({
@@ -61,10 +139,10 @@
 				overflow: "hidden"
 			});
 			//opts.slides or #mySlides container
-			$(opts.slides).css({
+			$('.genesis-slider-scroll '+opts.slides).css({
 				position:"relative",
-				width: $(jFS).width()*$(jFC).length+"px",
-				height: $(jFS).height()+"px",
+				width: $(jFS).width()*(opts.vertical?1:$(jFC).length)+"px",
+				height: $(jFS).height()*(opts.vertical?$(jFC).length:1)+"px",
 				overflow: "hidden"
 
 			});
@@ -76,9 +154,15 @@
 				"float":"left",
 				overflow:"hidden"
 			});
-			$(opts.slides).css({
-				marginLeft: "-" + (cur * $(opts.slides).find(":eq(0)").width() + "px")
-			});
+			if (opts.vertical) {
+				$('.genesis-slider-scroll '+opts.slides).css({
+					marginTop: "-" + (cur * $(opts.slides).find(":eq(0)").height() + "px")
+				});
+			} else {
+				$('.genesis-slider-scroll '+opts.slides).css({
+					marginLeft: "-" + (cur * $(opts.slides).find(":eq(0)").width() + "px")
+				});
+			} 
 		}
 		// sets initial size
 		resize();
@@ -99,12 +183,32 @@
 				var dur = 1;
 				if (cur > 0)
 					cur--;
-				else {
+				else if (maxi > 1 && opts.loop) {
+					if (opts.vertical) {
+						$(opts.slides).css({
+							marginTop: "-" + $(opts.slides+' > .jFlowSlideContainer:first').height() + "px"
+						});
+					} else {
+						$(opts.slides).css({
+							marginLeft: "-" + $(opts.slides+' > .jFlowSlideContainer:first').width() + "px"
+						});
+					}
+					$(opts.slides+' > .jFlowSlideContainer').last().clone(true).insertBefore(opts.slides+' > .jFlowSlideContainer:first');
+					$(opts.slides+' > .jFlowSlideContainer').last().remove();
+				} else {
 					cur = maxi -1;
 					dur = cur;
 				}
 				$(jFC).removeClass(jSel);
-				slide(dur,cur);
+				cov = opts.effect.split('-');
+				if (cov[0] == 'cover')
+					cover(cov[1],cur);
+				else if (opts.effect == 'fade')
+					fade(cur);
+				else if (opts.effect == 'wipe')
+					wipe(cur);
+				else
+					slide(dur,cur);
 				$(jFC).eq(cur).addClass(jSel);
 			}
 		}
@@ -113,14 +217,33 @@
 				var dur = 1;
 				if (cur < maxi - 1)
 					cur++;
-				else {
+				else if (maxi > 1 && opts.loop) {
+					first = $(opts.slides+' > .jFlowSlideContainer:first').clone(true);
+					$(opts.slides).append(first);
+					$(opts.slides+' > .jFlowSlideContainer:first').remove();
+					if (opts.vertical) {
+						$(opts.slides).css({
+							marginTop: "-" + ((maxi - 2) * $(opts.slides+' > .jFlowSlideContainer:first').height()) + "px"
+						});
+					} else {
+						$(opts.slides).css({
+							marginLeft: "-" + ((maxi - 2) * $(opts.slides+' > .jFlowSlideContainer:first').width()) + "px"
+						});
+					}
+				} else {
 					cur = 0;
 					dur = maxi -1;
 				}
 				$(jFC).removeClass(jSel);
-				//$(jFS).fadeOut("fast");
-				slide(dur, cur);
-				//$(jFS).fadeIn("fast");
+				cov = opts.effect.split('-');
+				if (cov[0] == 'cover')
+					cover(cov[1],cur);
+				else if (opts.effect == 'fade')
+					fade(cur);
+				else if (opts.effect == 'wipe')
+					wipe(cur);
+				else
+					slide(dur,cur);
 				$(jFC).eq(cur).addClass(jSel);
 			}
 		}
@@ -129,7 +252,10 @@
 				if(timer != null) 
 					clearInterval(timer);
         		timer = setInterval(function() {
-	                	$(opts.next).click();
+		                if (opts.effect=='left' || opts.effect=='up')
+		                	$(opts.prev).click();
+        			else 
+		                	$(opts.next).click();
 						}, opts.timer);
 			}
 		}
@@ -150,6 +276,8 @@
 		selectedWrapper: "jFlowSelected",  // just pure text, no sign
 		easing: "swing",
 		width: "100%",
+		loop: 0,
+		effect: "right",
 		prev: ".slider-previous", // must be class, use . sign
 		next: ".slider-next" // must be class, use . sign
 	};

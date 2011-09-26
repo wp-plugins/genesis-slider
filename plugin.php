@@ -6,23 +6,26 @@
 	Author: StudioPress
 	Author URI: http://www.studiopress.com
 
-	Version: 0.9.4
+	Version: 0.9.5
 
 	License: GNU General Public License v2.0
 	License URI: http://www.opensource.org/licenses/gpl-license.php
 */
 
 /**
- * Props to Rafal Tomal, Nick Croft, Nathan Rice and Brian Gardner for collaboratively writing this plugin.
+ * Props to Rafal Tomal, Nick Croft, Nathan Rice, Ron Rennick and Brian Gardner for collaboratively writing this plugin.
  */
 
 define( 'GENESIS_SLIDER_SETTINGS_FIELD', 'genesis_slider_settings' );
 
-add_action( 'genesis_init', 'GenesisSliderInit', 15 );
+add_action( 'after_setup_theme', 'GenesisSliderInit', 15 );
 /**
  * Loads required files and adds image via Genesis Init Hook
  */
 function GenesisSliderInit() {
+	// require Genesis
+	if( ! function_exists( 'genesis_get_option' ) )
+		return;
 
 	// translation support
 	load_plugin_textdomain( 'genesis-slider', false, '/genesis-slider/languages/' );
@@ -54,6 +57,7 @@ function genesis_slider_sanitization() {
 			'slideshow_arrows',
 			'slideshow_excerpt_show',
 			'slideshow_title_show',
+			'slideshow_loop',
 		) );
 	genesis_add_option_filter( 'no_html', GENESIS_SLIDER_SETTINGS_FIELD,
 		array(
@@ -69,6 +73,7 @@ function genesis_slider_sanitization() {
 			'slideshow_delay',
 			'slideshow_height',
 			'slideshow_width',
+			'slideshow_effect',
 			'slideshow_excerpt_content',
 			'slideshow_excerpt_content_limit',
 			'slideshow_more_text',
@@ -84,7 +89,7 @@ function genesis_slider_sanitization() {
 function genesis_slider_scripts() {
 
 	/** easySlider JavaScript code */
-	wp_enqueue_script( 'jflow', WP_PLUGIN_URL . '/genesis-slider/js/jflow.plus.js', array( 'jquery' ), '1.2', TRUE );
+	wp_enqueue_script( 'jflow', WP_PLUGIN_URL . '/genesis-slider/js/jflow.plus.js', array( 'jquery' ), '0.9.5', TRUE );
 
 }
 
@@ -135,6 +140,11 @@ function genesis_slider_jflow_params() {
 	$duration = ( int ) genesis_get_slider_option( 'slideshow_delay' );
 	$height = ( int ) genesis_get_slider_option( 'slideshow_height' );
 	$width = ( int ) genesis_get_slider_option( 'slideshow_width' );
+	$effect = genesis_get_slider_option( 'slideshow_effect' );
+
+	$loop = 0;
+	if ( empty( $effect ) || in_array( $effect, array( 'up', 'down', 'left', 'right' ) ) )
+		$loop = ( int ) genesis_get_slider_option( 'slideshow_loop' );
 
 	$output = 'jQuery(document).ready(function($) {
 					$(".myController").jFlow({
@@ -146,6 +156,8 @@ function genesis_slider_jflow_params() {
 						height: "' . $height . 'px",
 						timer: ' . $timer . ',
 						duration: ' . $duration . ',
+						loop: ' . $loop . ',
+						effect: "' . esc_js( $effect ) . '",
 						prev: ".slider-previous",
 						next: ".slider-next",
 						auto: true
@@ -166,7 +178,7 @@ function Genesis_SliderRegister() {
 }
 
 /** Creates read more link after excerpt */
-function genesis_slider_excerpt_more($more) {
+function genesis_slider_excerpt_more( $more ) {
 	global $post;
 	static $read_more = null;
 
@@ -176,7 +188,7 @@ function genesis_slider_excerpt_more($more) {
 	if ( !$read_more )
 		return '';
 
-	return '&hellip; <a href="'. get_permalink($post->ID) . '">' . $read_more . '</a>';
+	return '&hellip; <a href="'. get_permalink( $post->ID ) . '">' . __( $read_more, 'genesis-slider' ) . '</a>';
 }
 
 /**
@@ -271,10 +283,15 @@ class Genesis_SliderWidget extends WP_Widget {
 			) );
 
 			$query_args = apply_filters( 'genesis_slider_query_args', $query_args );
+			
+			$effect = genesis_get_slider_option( 'slideshow_effect' );
+			$scroll = '';
+			if ( empty( $effect ) || in_array( $effect, array( 'up', 'down', 'left', 'right' ) ) )
+				$scroll = 'genesis-slider-scroll';
 ?>
 
 		<div id="genesis-slider">
-			<div class="genesis-slider-wrap">
+			<div class="genesis-slider-wrap <?php echo $scroll; ?>">
 
 				<div id="slides">
 					<?php
@@ -293,7 +310,7 @@ class Genesis_SliderWidget extends WP_Widget {
 					<div>
 
 					<?php if ( $show_excerpt == 1 || $show_title == 1 ) { ?>
-						<div class="slide-excerpt">
+						<div class="slide-excerpt slide-<?php the_ID(); ?>">
 							<div class="slide-background"></div><!-- end .slide-background -->
 							<div class="slide-excerpt-border ">
 								<?php

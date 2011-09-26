@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: slider, slideshow, genesis, genesiswp, studiopress
 Requires at least: 3.2
 Tested up to: 3.2.1
-Stable tag: 0.9.4
+Stable tag: 0.9.5
 
 This plugin allows you to create a simple slider that displays the featured image, along with the title and excerpt from each post.
 
@@ -59,6 +59,10 @@ function my_child_theme_slider_defaults( $defaults ) {
 `
 
 == Changelog ==
+
+= 0.9.5 =
+* add transitions
+* minor tranlation fixes, add slide id class
 
 = 0.9.4 =
 * bug fix - slider scrolling on no arrows
