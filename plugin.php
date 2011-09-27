@@ -6,7 +6,7 @@
 	Author: StudioPress
 	Author URI: http://www.studiopress.com
 
-	Version: 0.9.5
+	Version: 0.9.5.1
 
 	License: GNU General Public License v2.0
 	License URI: http://www.opensource.org/licenses/gpl-license.php
@@ -35,7 +35,6 @@ function GenesisSliderInit() {
 	add_action( 'wp_print_styles', 'genesis_slider_styles' );
 	add_action( 'wp_head', 'genesis_slider_head', 1 );
 	add_action( 'wp_footer', 'genesis_slider_jflow_params' );
-	add_filter( 'excerpt_more', 'genesis_slider_excerpt_more' );
 	add_action( 'widgets_init', 'Genesis_SliderRegister' );
 	
 	/** Include Admin file */
@@ -89,7 +88,7 @@ function genesis_slider_sanitization() {
 function genesis_slider_scripts() {
 
 	/** easySlider JavaScript code */
-	wp_enqueue_script( 'jflow', WP_PLUGIN_URL . '/genesis-slider/js/jflow.plus.js', array( 'jquery' ), '0.9.5', TRUE );
+	wp_enqueue_script( 'jflow', WP_PLUGIN_URL . '/genesis-slider/js/jflow.plus.js', array( 'jquery' ), '0.9.5.1', TRUE );
 
 }
 
@@ -288,6 +287,8 @@ class Genesis_SliderWidget extends WP_Widget {
 			$scroll = '';
 			if ( empty( $effect ) || in_array( $effect, array( 'up', 'down', 'left', 'right' ) ) )
 				$scroll = 'genesis-slider-scroll';
+
+			add_filter( 'excerpt_more', 'genesis_slider_excerpt_more' );
 ?>
 
 		<div id="genesis-slider">
@@ -351,8 +352,9 @@ class Genesis_SliderWidget extends WP_Widget {
 		</div><!-- end #genesis-slider -->
 
 <?php
-		echo $after_widget;
-		wp_reset_query();
+			echo $after_widget;
+			remove_filter( 'excerpt_more', 'genesis_slider_excerpt_more' );
+			wp_reset_query();
 
 		}
 

@@ -96,6 +96,7 @@
 			slide.css({ zIndex: 10 });
 			slide.css(start);
 			slide.show();
+			opts.isanimated = 1;
 			slide.animate({
 					marginTop: (slide.height() * (i == 0 ? 0 : -1)) + 'px',
 					marginLeft: '0px'
@@ -109,8 +110,20 @@
 						marginTop: '0px',
 						marginLeft: '0px'
 					});
+					opts.isanimated = 0;
 				}
 			);					 
+		}
+		var gsanimate = function (dur,cur) {
+			var cov = opts.effect.split('-');
+			if (cov[0] == 'cover')
+				cover(cov[1],cur);
+			else if (opts.effect == 'fade')
+				fade(cur);
+			else if (opts.effect == 'wipe')
+				wipe(cur);
+			else
+				slide(dur,cur);
 		}
 		$(this).find(jFC).each(function(i){
 			$(this).click(function(){
@@ -119,7 +132,7 @@
 					$(jFC).removeClass(jSel);
 					$(this).addClass(jSel);
 					var dur = Math.abs(cur-i);
-					slide(dur,i);
+					gsanimate(dur,i);
 					cur = i;
 				}
 			});
@@ -179,84 +192,71 @@
 			donext();		
 		});
 		var doprev = function (x){
-			if ($(opts.slides).is(":not(:animated)")) {
-				var dur = 1;
-				if (cur > 0)
-					cur--;
-				else if (maxi > 1 && opts.loop) {
-					if (opts.vertical) {
-						$(opts.slides).css({
-							marginTop: "-" + $(opts.slides+' > .jFlowSlideContainer:first').height() + "px"
-						});
-					} else {
-						$(opts.slides).css({
-							marginLeft: "-" + $(opts.slides+' > .jFlowSlideContainer:first').width() + "px"
-						});
-					}
-					$(opts.slides+' > .jFlowSlideContainer').last().clone(true).insertBefore(opts.slides+' > .jFlowSlideContainer:first');
-					$(opts.slides+' > .jFlowSlideContainer').last().remove();
+			if (opts.isanimated)
+				return;
+
+			var dur = 1;
+			if (cur > 0)
+				cur--;
+			else if (maxi > 1 && opts.loop) {
+				if (opts.vertical) {
+					$(opts.slides).css({
+						marginTop: "-" + $(opts.slides+' > .jFlowSlideContainer:first').height() + "px"
+					});
 				} else {
-					cur = maxi -1;
-					dur = cur;
+					$(opts.slides).css({
+						marginLeft: "-" + $(opts.slides+' > .jFlowSlideContainer:first').width() + "px"
+					});
 				}
-				$(jFC).removeClass(jSel);
-				cov = opts.effect.split('-');
-				if (cov[0] == 'cover')
-					cover(cov[1],cur);
-				else if (opts.effect == 'fade')
-					fade(cur);
-				else if (opts.effect == 'wipe')
-					wipe(cur);
-				else
-					slide(dur,cur);
-				$(jFC).eq(cur).addClass(jSel);
+				$(opts.slides+' > .jFlowSlideContainer').last().clone(true).insertBefore(opts.slides+' > .jFlowSlideContainer:first');
+				$(opts.slides+' > .jFlowSlideContainer').last().remove();
+			} else {
+				cur = maxi -1;
+				dur = cur;
 			}
+			$(jFC).removeClass(jSel);
+			gsanimate(dur,cur);
+			$(jFC).eq(cur).addClass(jSel);
 		}
-			var donext = function (x){
-			if ($(opts.slides).is(":not(:animated)")) {
-				var dur = 1;
-				if (cur < maxi - 1)
-					cur++;
-				else if (maxi > 1 && opts.loop) {
-					first = $(opts.slides+' > .jFlowSlideContainer:first').clone(true);
-					$(opts.slides).append(first);
-					$(opts.slides+' > .jFlowSlideContainer:first').remove();
-					if (opts.vertical) {
-						$(opts.slides).css({
-							marginTop: "-" + ((maxi - 2) * $(opts.slides+' > .jFlowSlideContainer:first').height()) + "px"
-						});
-					} else {
-						$(opts.slides).css({
-							marginLeft: "-" + ((maxi - 2) * $(opts.slides+' > .jFlowSlideContainer:first').width()) + "px"
-						});
-					}
+		var donext = function (x){
+			if (opts.isanimated)
+				return;
+				
+			var dur = 1;
+			if (cur < maxi - 1)
+				cur++;
+			else if (maxi > 1 && opts.loop) {
+				first = $(opts.slides+' > .jFlowSlideContainer:first').clone(true);
+				$(opts.slides).append(first);
+				$(opts.slides+' > .jFlowSlideContainer:first').remove();
+				if (opts.vertical) {
+					$(opts.slides).css({
+						marginTop: "-" + ((maxi - 2) * $(opts.slides+' > .jFlowSlideContainer:first').height()) + "px"
+					});
 				} else {
-					cur = 0;
-					dur = maxi -1;
+					$(opts.slides).css({
+						marginLeft: "-" + ((maxi - 2) * $(opts.slides+' > .jFlowSlideContainer:first').width()) + "px"
+					});
 				}
-				$(jFC).removeClass(jSel);
-				cov = opts.effect.split('-');
-				if (cov[0] == 'cover')
-					cover(cov[1],cur);
-				else if (opts.effect == 'fade')
-					fade(cur);
-				else if (opts.effect == 'wipe')
-					wipe(cur);
-				else
-					slide(dur,cur);
-				$(jFC).eq(cur).addClass(jSel);
+			} else {
+				cur = 0;
+				dur = maxi -1;
 			}
+			$(jFC).removeClass(jSel);
+			gsanimate(dur,cur);
+			$(jFC).eq(cur).addClass(jSel);
 		}
 		var dotimer = function (x){
 			if((opts.auto) == true) {
 				if(timer != null) 
 					clearInterval(timer);
-        		timer = setInterval(function() {
-		                if (opts.effect=='left' || opts.effect=='up')
-		                	$(opts.prev).click();
-        			else 
-		                	$(opts.next).click();
-						}, opts.timer);
+
+				timer = setInterval(function() {
+					if (opts.effect=='left' || opts.effect=='up')
+						$(opts.prev).click();
+					else
+						$(opts.next).click();
+				}, opts.timer);
 			}
 		}
 //Pause/Resume function fires at hover
