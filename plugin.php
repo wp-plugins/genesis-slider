@@ -116,7 +116,7 @@ function genesis_slider_head() {
 
 		$vertical = genesis_get_slider_option( 'location_vertical' );
 		$horizontal = genesis_get_slider_option( 'location_horizontal' );
-		$display = ( genesis_get_slider_option( 'posts_num' ) >= 2 && genesis_get_slider_option( 'slideshow_arrows' ) ) ? 'top: ' . $slideNavTop . 'px' : 'display: none';
+		$display = ( genesis_get_slider_option( 'posts_num' ) != 1 && genesis_get_slider_option( 'slideshow_arrows' ) ) ? 'top: ' . $slideNavTop . 'px' : 'display: none';
 
 		echo '
 		<style type="text/css">
