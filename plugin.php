@@ -126,7 +126,7 @@ function genesis_slider_head() {
 			.slide-excerpt { width: ' . $slideInfoWidth . 'px; }
 			.slide-excerpt { ' . $vertical . ': 0; }
 			.slide-excerpt { '. $horizontal . ': 0; }
-			div.slider-next, div.slider-previous { ' . $display . ' };
+			div.slider-next, div.slider-previous { ' . $display . '; }
 		</style>';
 }
 
