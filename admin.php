@@ -240,10 +240,10 @@ function genesis_slider_options_box() {
 						</select>
 					</p>
 
-					<p><strong style="display: block; font-size: 11px; margin-top: 10px;"><?php _e( 'Include or Exclude by Taxonomy ID', 'genesis-slider' ); ?></strong></p>
+					<p><strong style="display: block; font-size: 11px; margin-top: 10px;"><?php _e( 'Exclude by Taxonomy ID', 'genesis-slider' ); ?></strong></p>
 
 					<p>
-						<label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[exclude_terms]"><?php printf( __( 'List which category, tag or other taxonomy IDs to include / exclude. (1,2,3,4 for example)', 'genesis-slider' ), '<br />' ); ?></label>
+						<label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[exclude_terms]"><?php printf( __( 'List which category, tag or other taxonomy IDs to exclude. (1,2,3,4 for example)', 'genesis-slider' ), '<br />' ); ?></label>
 					</p>
 
 					<p>
