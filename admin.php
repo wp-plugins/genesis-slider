@@ -288,10 +288,18 @@ function genesis_slider_options_box() {
 						<option style="padding-right:10px;" value="date" <?php selected( 'date', genesis_get_slider_option( 'orderby' ) ); ?>><?php _e( 'Date', 'genesis-slider' ); ?></option>
 						<option style="padding-right:10px;" value="title" <?php selected( 'title', genesis_get_slider_option( 'orderby' ) ); ?>><?php _e( 'Title', 'genesis-slider' ); ?></option>
 						<option style="padding-right:10px;" value="ID" <?php selected( 'ID', genesis_get_slider_option( 'orderby' ) ); ?>><?php _e( 'ID', 'genesis-slider' ); ?></option>
+						<option style="padding-right:10px;" value="menu_order" <?php selected( 'menu_order', genesis_get_slider_option( 'orderby' ) ); ?>><?php _e( 'Menu Order', 'genesis-slider' ); ?></option>
 						<option style="padding-right:10px;" value="rand" <?php selected( 'rand', genesis_get_slider_option( 'orderby' ) ); ?>><?php _e( 'Random', 'genesis-slider' ); ?></option>
 					</select>
 				</p>
 
+				<p>
+					<label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[order]"><?php _e( 'Order', 'genesis-slider' ); ?>:</label>
+					<select id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[order]" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[order]">
+						<option style="padding-right:10px;" value="DESC" <?php selected( 'DESC', genesis_get_slider_option( 'order' ) ); ?>><?php _e( 'Descending', 'genesis-slider' ); ?></option>
+						<option style="padding-right:10px;" value="ASC" <?php selected( 'ASC', genesis_get_slider_option( 'order' ) ); ?>><?php _e( 'Ascending', 'genesis-slider' ); ?></option>
+					</select>
+				</p>
 			</div>
 
 			<hr class="div" />
