@@ -120,8 +120,6 @@ function genesis_slider_head() {
 
 		echo '
 		<style type="text/css">
-			#previous a img { background: transparent url(' . CHILD_URL . '/images/slider-previous.png) no-repeat; }
-			#next a img { background: transparent url(' . CHILD_URL . '/images/slider-next.png) no-repeat; }
 			#genesis-slider, #slides, .genesis-slider-wrap { height: ' . $height . 'px; width: ' . $width . 'px; }
 			.slide-excerpt { width: ' . $slideInfoWidth . 'px; }
 			.slide-excerpt { ' . $vertical . ': 0; }
