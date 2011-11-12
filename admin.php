@@ -320,24 +320,24 @@ function genesis_slider_options_box() {
 					<label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_effect]"><?php _e( 'Slider Effect', 'genesis-slider' ); ?>:
 					<?php _e( 'Select one of the following:', 'genesis-slider' ); ?>
 					<select name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_effect]" id="<?php echo GENESIS_SETTINGS_FIELD; ?>[slideshow_effect]">
-						<option value="right" <?php selected( 'right', genesis_get_option( 'slideshow_effect', GENESIS_SLIDER_SETTINGS_FIELD ) ); ?>><?php _e( 'Scroll right', 'genesis-slider' ); ?></option>
-						<option value="left" <?php selected( 'left', genesis_get_option( 'slideshow_effect', GENESIS_SLIDER_SETTINGS_FIELD ) ); ?>><?php _e( 'Scroll left', 'genesis-slider' ); ?></option>
-						<option value="down" <?php selected( 'down', genesis_get_option( 'slideshow_effect', GENESIS_SLIDER_SETTINGS_FIELD ) ); ?>><?php _e( 'Scroll down', 'genesis-slider' ); ?></option>
-						<option value="up" <?php selected( 'up', genesis_get_option( 'slideshow_effect', GENESIS_SLIDER_SETTINGS_FIELD ) ); ?>><?php _e( 'Scroll up', 'genesis-slider' ); ?></option>
-						<option value="fade" <?php selected( 'fade', genesis_get_option( 'slideshow_effect', GENESIS_SLIDER_SETTINGS_FIELD ) ); ?>><?php _e( 'Fade', 'genesis-slider' ); ?></option>
-						<option value="wipe" <?php selected( 'wipe', genesis_get_option( 'slideshow_effect', GENESIS_SLIDER_SETTINGS_FIELD ) ); ?>><?php _e( 'Wipe', 'genesis-slider' ); ?></option>
-						<option value="cover-up" <?php selected( 'cover-up', genesis_get_option( 'slideshow_effect', GENESIS_SLIDER_SETTINGS_FIELD ) ); ?>><?php _e( 'Cover up', 'genesis-slider' ); ?></option>
-						<option value="cover-down" <?php selected( 'cover-down', genesis_get_option( 'slideshow_effect', GENESIS_SLIDER_SETTINGS_FIELD ) ); ?>><?php _e( 'Cover down', 'genesis-slider' ); ?></option>
-						<option value="cover-left" <?php selected( 'cover-left', genesis_get_option( 'slideshow_effect', GENESIS_SLIDER_SETTINGS_FIELD ) ); ?>><?php _e( 'Cover left', 'genesis-slider' ); ?></option>
-						<option value="cover-right" <?php selected( 'cover-right', genesis_get_option( 'slideshow_effect', GENESIS_SLIDER_SETTINGS_FIELD ) ); ?>><?php _e( 'Cover right', 'genesis-slider' ); ?></option>
+						<option value="right" <?php selected( 'right', genesis_get_slider_option( 'slideshow_effect' ) ); ?>><?php _e( 'Scroll right', 'genesis-slider' ); ?></option>
+						<option value="left" <?php selected( 'left', genesis_get_slider_option( 'slideshow_effect' ) ); ?>><?php _e( 'Scroll left', 'genesis-slider' ); ?></option>
+						<option value="down" <?php selected( 'down', genesis_get_slider_option( 'slideshow_effect' ) ); ?>><?php _e( 'Scroll down', 'genesis-slider' ); ?></option>
+						<option value="up" <?php selected( 'up', genesis_get_slider_option( 'slideshow_effect' ) ); ?>><?php _e( 'Scroll up', 'genesis-slider' ); ?></option>
+						<option value="fade" <?php selected( 'fade', genesis_get_slider_option( 'slideshow_effect' ) ); ?>><?php _e( 'Fade', 'genesis-slider' ); ?></option>
+						<option value="wipe" <?php selected( 'wipe', genesis_get_slider_option( 'slideshow_effect' ) ); ?>><?php _e( 'Wipe', 'genesis-slider' ); ?></option>
+						<option value="cover-up" <?php selected( 'cover-up', genesis_get_slider_option( 'slideshow_effect' ) ); ?>><?php _e( 'Cover up', 'genesis-slider' ); ?></option>
+						<option value="cover-down" <?php selected( 'cover-down', genesis_get_slider_option( 'slideshow_effect' ) ); ?>><?php _e( 'Cover down', 'genesis-slider' ); ?></option>
+						<option value="cover-left" <?php selected( 'cover-left', genesis_get_slider_option( 'slideshow_effect' ) ); ?>><?php _e( 'Cover left', 'genesis-slider' ); ?></option>
+						<option value="cover-right" <?php selected( 'cover-right', genesis_get_slider_option( 'slideshow_effect' ) ); ?>><?php _e( 'Cover right', 'genesis-slider' ); ?></option>
 					</select>
 				</p>
 
 				<p>
 					<label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_loop]"><?php _e( 'Scroll Loop (only applies to scroll options)', 'genesis-slider' ); ?>:
 					<select name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_loop]" id="<?php echo GENESIS_SETTINGS_FIELD; ?>[slideshow_loop]">
-						<option value="0" <?php selected( '0', genesis_get_option( 'slideshow_loop', GENESIS_SLIDER_SETTINGS_FIELD ) ); ?>><?php _e( 'Rewind slides', 'genesis-slider' ); ?></option>
-						<option value="1" <?php selected( '1', genesis_get_option( 'slideshow_loop', GENESIS_SLIDER_SETTINGS_FIELD ) ); ?>><?php _e( 'Loop slides', 'genesis-slider' ); ?></option>
+						<option value="0" <?php selected( '0', genesis_get_slider_option( 'slideshow_loop' ) ); ?>><?php _e( 'Rewind slides', 'genesis-slider' ); ?></option>
+						<option value="1" <?php selected( '1', genesis_get_slider_option( 'slideshow_loop' ) ); ?>><?php _e( 'Loop slides', 'genesis-slider' ); ?></option>
 					</select>
 				</p>
 
@@ -373,19 +373,19 @@ function genesis_slider_options_box() {
 				<p>
 					<?php _e( 'Select one of the following:', 'genesis-slider' ); ?>
 					<select name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_excerpt_content]" id="<?php echo GENESIS_SETTINGS_FIELD; ?>[slideshow_excerpt_content]">
-						<option value="full" <?php selected( 'full', genesis_get_option( 'slideshow_excerpt_content', GENESIS_SLIDER_SETTINGS_FIELD ) ); ?>><?php _e( 'Display post content', 'genesis-slider' ); ?></option>
-						<option value="excerpts" <?php selected( 'excerpts', genesis_get_option( 'slideshow_excerpt_content', GENESIS_SLIDER_SETTINGS_FIELD ) ); ?>><?php _e( 'Display post excerpts', 'genesis-slider' ); ?></option>
+						<option value="full" <?php selected( 'full', genesis_get_slider_option( 'slideshow_excerpt_content' ) ); ?>><?php _e( 'Display post content', 'genesis-slider' ); ?></option>
+						<option value="excerpts" <?php selected( 'excerpts', genesis_get_slider_option( 'slideshow_excerpt_content' ) ); ?>><?php _e( 'Display post excerpts', 'genesis-slider' ); ?></option>
 					</select>
 				</p>
 
 				<p>
 					<label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_more_text]"><?php _e( 'More Text (if applicable)', 'genesis-slider' ); ?>:</label>
-					<input type="text" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_more_text]" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_more_text]" value="<?php echo esc_attr( genesis_get_option( 'slideshow_more_text', GENESIS_SLIDER_SETTINGS_FIELD ) ); ?>" />
+					<input type="text" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_more_text]" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_more_text]" value="<?php echo esc_attr( genesis_get_slider_option( 'slideshow_more_text' ) ); ?>" />
 				</p>
 			
 				<p>
 					<label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_excerpt_content_limit]"><?php _e( 'Limit content to', 'genesis-slider' ); ?></label>
-					<input type="text" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_excerpt_content_limit]" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_excerpt_content_limit]" value="<?php echo esc_attr( genesis_option( 'slideshow_excerpt_content_limit', GENESIS_SLIDER_SETTINGS_FIELD ) ); ?>" size="3" />
+					<input type="text" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_excerpt_content_limit]" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_excerpt_content_limit]" value="<?php echo esc_attr( genesis_get_slider_option( 'slideshow_excerpt_content_limit' ) ); ?>" size="3" />
 					<label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_excerpt_content_limit]"><?php _e( 'characters', 'genesis-slider' ); ?></label>
 				</p>
 		

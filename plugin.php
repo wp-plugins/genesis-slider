@@ -306,15 +306,17 @@ class Genesis_SliderWidget extends WP_Widget {
 						while ( $slider_posts->have_posts() ) : $slider_posts->the_post();
 						$controller .= '<span class="jFlowControl"></span>';
 					?>
-					<div>
 
+					<div class="slide-wrap">
 					<?php if ( $show_excerpt == 1 || $show_title == 1 ) { ?>
+					
 						<div class="slide-excerpt slide-<?php the_ID(); ?>">
 							<div class="slide-background"></div><!-- end .slide-background -->
 							<div class="slide-excerpt-border ">
 								<?php
 									if ( $show_title == 1 ) { 
 								?>
+
 								<h2><a href="<?php the_permalink() ?>" rel="bookmark"><?php the_title(); ?></a></h2>
 								<?php 
 									}
@@ -327,6 +329,7 @@ class Genesis_SliderWidget extends WP_Widget {
 											the_content( esc_html( $more_text ) );
 									}
 								?>
+
 							</div><!-- end .slide-excerpt-border  -->
 						</div><!-- end .slide-excerpt -->
 					<?php } ?>
@@ -335,8 +338,9 @@ class Genesis_SliderWidget extends WP_Widget {
 							<a href="<?php the_permalink() ?>" rel="bookmark"><?php genesis_image( "format=html&size=slider" ); ?></a>
 						</div><!-- end .slide-image -->
 
-					</div>
+					</div><!-- end .slide-wrap -->
 				<?php endwhile; ?>
+
 				</div><!-- end #slides -->
 
 				<div class="myController">
