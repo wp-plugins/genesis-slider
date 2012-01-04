@@ -23,6 +23,7 @@ function genesis_slider_defaults() {
 		'slideshow_delay' => 800,
 		'slideshow_arrows' => 1,
 		'slideshow_loop' => 1,
+		'slideshow_no_link' => 0,
 		'slideshow_height' => 400,
 		'slideshow_width' => 870,
 		'slideshow_effect' => 'right',
@@ -356,12 +357,18 @@ function genesis_slider_options_box() {
 				</p>
 
 				<p>
-					<input type="checkbox" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_arrows]" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_arrows]" value="1" <?php checked(1, genesis_get_slider_option('slideshow_arrows')); ?> /> <label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_arrows]"><?php _e( 'Display Next / Previous Arrows in Slider?', 'genesis-slider' ); ?></label>
+					<?php _e( 'Navigation', 'genesis-slider' ); ?>:
+					<label><input type="radio" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_arrows]" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_arrows]" value="0" <?php checked(0, genesis_get_slider_option('slideshow_arrows')); ?> /> <?php _e( 'None', 'genesis-slider' ); ?></label>
+					<label><input type="radio" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_arrows]" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_arrows]" value="1" <?php checked(1, genesis_get_slider_option('slideshow_arrows')); ?> /> <?php _e( 'Arrows', 'genesis-slider' ); ?></label>
 				</p>
 
 			<hr class="div" />
 
 			<h4><?php _e( 'Content Settings', 'genesis-slider' ); ?></h4>
+
+				<p>
+					<input type="checkbox" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_no_link]" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_title_show]" value="1" <?php checked(1, genesis_get_slider_option('slideshow_no_link')); ?> /> <label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_no_link]"><?php _e( 'Do not link Slider image to Post/Page.', 'genesis-slider' ); ?></label>
+				</p>
 
 				<p>
 					<input type="checkbox" name="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_title_show]" id="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_title_show]" value="1" <?php checked(1, genesis_get_slider_option('slideshow_title_show')); ?> /> <label for="<?php echo GENESIS_SLIDER_SETTINGS_FIELD; ?>[slideshow_title_show]"><?php _e( 'Display Post/Page Title in Slider?', 'genesis-slider' ); ?></label>

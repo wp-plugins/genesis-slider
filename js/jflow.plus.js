@@ -15,9 +15,27 @@
 		var jFS =  opts.slideWrapper;
 		var jSel = opts.selectedWrapper;
 		var maxi = $(jFC).length;
-		var cur = (opts.effect == 'up' || opts.effect == 'left') ? maxi - 1 : 0;
+		opts.reverse = (opts.effect == 'down' || opts.effect == 'right') ? 1 : 0;
+		var cur = opts.reverse ? maxi - 1 : 0;
 		var timer;
-		// sliding function
+/*
+main animation routine
+*/
+		var gsanimate = function (dur,cur) {
+			opts.isanimated = 1;
+			var cov = opts.effect.split('-');
+			if (cov[0] == 'cover')
+				cover(cov[1],cur);
+			else if (opts.effect == 'fade')
+				fade(cur);
+			else if (opts.effect == 'wipe')
+				wipe(cur);
+			else
+				slide(dur,cur);
+		}
+/*
+individual animations
+*/
 		var slide = function (dur, i) {
 			$(opts.slides).children().css({
 				overflow:"hidden"
@@ -38,40 +56,36 @@
 						overflow:"hidden"
 					});
 					$(".temp_hide").show();
+
+					opts.isanimated = 0;
 				}
 			);
 		}
 		var fade = function (i) {
-			$(opts.slides+' > .jFlowSlideContainer:eq(' + ((i == 0 ? maxi : i) - 1) + ')').fadeOut(opts.duration,'linear',function(){
+			$(opts.slides+' > .jFlowSlideContainer:eq(' + opts.slideprevious + ')').fadeOut(opts.duration,'linear',function(){
 				$(opts.slides+' > .jFlowSlideContainer').hide();
 				if (i < maxi)
 					$(opts.slides+' > .jFlowSlideContainer:eq(' + i + ')').fadeIn(opts.duration / 2,opts.easing);
 				else
 					$(opts.slides+' > .jFlowSlideContainer:eq(0)').fadeIn(opts.duration / 2,opts.easing);
+
+				opts.isanimated = 0;
 			});
 		}
 		var wipe = function (i) {
 			var slide = $(opts.slides+' > .jFlowSlideContainer:eq(' + i + ')');
-
-			gseffect({
-					marginTop: (slide.height() * (i == 0 ? -1 : -2)) + 'px',
-					marginLeft: (slide.width() * -1) + 'px'
-				},
-				slide,
-				i);
+			gseffect((i == 0 ? -1 : -2),-1,slide,i);
 		}
 		var cover = function (dir,i) {
 			var slide = $(opts.slides+' > .jFlowSlideContainer:eq(' + i + ')');
-			var tstart,tleft;
+			var tstart,tleft=0;
 
 			switch(dir) {
 				case 'up':
 					tstart = (i == 0 ? 1 : 0);
-					tleft = 0;
 					break;
 				case 'down':
 					tstart = (i == 0 ? -1 : -2);
-					tleft = 0;
 					break;
 				case 'left':
 					tstart = (i == 0 ? 0 : -1);
@@ -82,21 +96,21 @@
 					tleft = -1;
 					break;
 			}
-
-			gseffect({
-					marginTop: (slide.height() * tstart) + 'px',
-					marginLeft: (slide.width() * tleft) + 'px'
-				}, 
-				slide,
-				i);
+			gseffect(tstart,tleft,slide,i);
 		}
-		var gseffect = function (start,slide,i) {
-			if (i == 0)
-				$(opts.slides+' > .jFlowSlideContainer:eq(' + (maxi - 1) + ')').css({ position: 'absolute' });
-			slide.css({ zIndex: 10 });
-			slide.css(start);
-			slide.show();
+/*
+animation routines for fade, cover & wipe
+*/
+		var gseffect = function (margintop,marginleft,slide,i) {
 			opts.isanimated = 1;
+			if (i == 0)
+				$(opts.slides+' > .jFlowSlideContainer:eq(' + opts.slideprevious + ')').css({ position: 'absolute' });
+			slide.css({ zIndex: 10 });
+			slide.css({
+				marginTop: (slide.height() * margintop) + 'px',
+				marginLeft: (slide.width() * marginleft) + 'px'
+			});
+			slide.show();
 			slide.animate({
 					marginTop: (slide.height() * (i == 0 ? 0 : -1)) + 'px',
 					marginLeft: '0px'
@@ -104,46 +118,32 @@
 				opts.duration,
 				opts.easing,
 				function() {
-					$(opts.slides+' > .jFlowSlideContainer:eq(' + ((i == 0 ? maxi : i) - 1) + ')').hide().css({ position: 'relative' });
-					slide.css({
-						zIndex: 0,
-						marginTop: '0px',
-						marginLeft: '0px'
-					});
-					opts.isanimated = 0;
+					finisheffect(slide);
 				}
 			);					 
 		}
-		var gsanimate = function (dur,cur) {
-			var cov = opts.effect.split('-');
-			if (cov[0] == 'cover')
-				cover(cov[1],cur);
-			else if (opts.effect == 'fade')
-				fade(cur);
-			else if (opts.effect == 'wipe')
-				wipe(cur);
-			else
-				slide(dur,cur);
-		}
-		$(this).find(jFC).each(function(i){
-			$(this).click(function(){
-				dotimer();
-				if ($(opts.slides).is(":not(:animated)")) {
-					$(jFC).removeClass(jSel);
-					$(this).addClass(jSel);
-					var dur = Math.abs(cur-i);
-					gsanimate(dur,i);
-					cur = i;
-				}
+		var finisheffect = function(slide) {
+			$(opts.slides+' > .jFlowSlideContainer:eq(' + opts.slideprevious + ')').hide().css({ position: 'relative' });
+			slide.css({
+				zIndex: 0,
+				marginTop: '0px',
+				marginLeft: '0px'
 			});
-		});
-		$(opts.slides).before('<div id="'+jFS.substring(1, jFS.length)+'"></div>').appendTo(jFS);
-		$(opts.slides).find("div").each(function(){
-			$(this).before('<div class="jFlowSlideContainer"></div>').appendTo($(this).prev());
-		});
-		//initialize the controller
-		opts.vertical=(opts.effect=='up'||opts.effect=='down')?1:0;
-		$(jFC).eq(cur).addClass(jSel);
+			opts.isanimated = 0;
+		}
+/*
+keep in sync with slider
+*/
+		var doanimation = function (dur,cur,skip) {
+			if (!skip) {
+				$(jFC).removeClass(jSel);
+				gsanimate(dur,cur);
+			}
+			$(jFC).eq(cur).addClass(jSel);			
+		}
+/*
+window resize
+*/
 		var resize = function (x){
 			$(jFS).css({
 				position:"relative",
@@ -177,25 +177,15 @@
 				});
 			} 
 		}
-		// sets initial size
-		resize();
-		// resets size
-		$(window).resize(function(){
-			resize();						  
-		});
-		$(opts.prev).click(function(){
-			dotimer();
-			doprev();
-		});
-		$(opts.next).click(function(){
-			dotimer();
-			donext();		
-		});
+/*
+event handlers
+*/
 		var doprev = function (x){
 			if (opts.isanimated)
 				return;
 
 			var dur = 1;
+			opts.slideprevious = cur;
 			if (cur > 0)
 				cur--;
 			else if (maxi > 1 && opts.loop) {
@@ -214,15 +204,14 @@
 				cur = maxi -1;
 				dur = cur;
 			}
-			$(jFC).removeClass(jSel);
-			gsanimate(dur,cur);
-			$(jFC).eq(cur).addClass(jSel);
+			doanimation(dur,cur,false);
 		}
 		var donext = function (x){
 			if (opts.isanimated)
 				return;
-				
+
 			var dur = 1;
+			opts.slideprevious = cur;
 			if (cur < maxi - 1)
 				cur++;
 			else if (maxi > 1 && opts.loop) {
@@ -242,9 +231,7 @@
 				cur = 0;
 				dur = maxi -1;
 			}
-			$(jFC).removeClass(jSel);
-			gsanimate(dur,cur);
-			$(jFC).eq(cur).addClass(jSel);
+			doanimation(dur,cur,false);
 		}
 		var dotimer = function (x){
 			if((opts.auto) == true) {
@@ -252,16 +239,90 @@
 					clearInterval(timer);
 
 				timer = setInterval(function() {
-					if (opts.effect=='left' || opts.effect=='up')
-						$(opts.prev).click();
-					else
-						$(opts.next).click();
+					if (opts.isanimated)
+						return;
+
+					dotimer();
+					if (opts.reverse){
+						doprev();
+					}else
+						donext();
 				}, opts.timer);
 			}
 		}
+		$(this).find(jFC).each(function(i){
+			$(this).click(function(){
+				if (opts.isanimated)
+					return;
+
+				clearInterval(timer);
+				opts.isanimated = 1;
+				$(jFC).removeClass(jSel);
+				$(this).addClass(jSel);
+				var dur = Math.abs(cur-i);
+				gsanimate(dur,i);
+				cur = i;
+				dotimer();
+			});
+		});
+/*
+initialize the controller
+*/
+		$(opts.slides).before('<div id="'+jFS.substring(1, jFS.length)+'"></div>').appendTo(jFS);
+		$(opts.slides).find("div").each(function(){
+			$(this).before('<div class="jFlowSlideContainer"></div>').appendTo($(this).prev());
+		});
+		opts.vertical=(opts.effect=='up'||opts.effect=='down') ? 1 : 0;
+		cov = opts.effect.split('-');
+		if (cov[0] == 'cover' || opts.effect == 'fade' || opts.effect == 'wipe') {
+			$(opts.slides+' > .jFlowSlideContainer').hide();
+			$(opts.slides+' > .jFlowSlideContainer:eq(' + cur + ')').show();
+		}
+		doanimation(0,cur,true);
+
+		// sets initial size
+		resize();
+		// resets size
+		$(window).resize(resize);
+
+		$(opts.prev).click(function(){
+			if (opts.isanimated)
+				return;
+
+			if (opts.loop && opts.reverse && cur < (maxi - 1)) {
+				for (i = cur + 1; i < maxi; i++) {
+					$(opts.slides+' > .jFlowSlideContainer').last().clone(true).insertBefore(opts.slides+' > .jFlowSlideContainer:first');
+					$(opts.slides+' > .jFlowSlideContainer').last().remove();
+				}
+				cur = maxi - 1;
+			} else if (!opts.reverse && cur > 0 && (opts.loop || $.inArray(opts.effect, [ '', 'right', 'left', 'up', 'down' ]) < 0)) {
+				for (i = 0; i < cur; i++) {
+					first = $(opts.slides+' > .jFlowSlideContainer:first').clone(true);
+					$(opts.slides).append(first);
+					$(opts.slides+' > .jFlowSlideContainer:first').remove();
+				}
+				cur = 0;
+			}
+			dotimer();
+			if (opts.reverse)
+				donext();
+			else
+				doprev();
+		});
+
+		$(opts.next).click(function(){
+			if (opts.isanimated)
+				return;
+
+			dotimer();
+			if (opts.reverse)
+				doprev();
+			else
+				donext();
+		});
 //Pause/Resume function fires at hover
 		dotimer();
-			$(opts.slides).hover(
+		$(opts.slides).hover(
 			function() {
 			clearInterval(timer);
 			},
